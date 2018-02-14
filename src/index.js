@@ -1,15 +1,13 @@
-// @flow
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import 'index.css';
-import store from 'store';
+import configureStore from 'store/configureStore';
 import App from 'containers/App';
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={configureStore()}>
     <App />
   </Provider>,
   document.getElementById('root')

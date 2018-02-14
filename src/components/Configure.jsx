@@ -73,7 +73,25 @@ class Configure extends React.Component {
             toggle
           />
         </label>
-
+        <label htmlFor="bracketSize">
+          Bracket Size
+          <Field
+            required
+            name="bracketSize"
+            type="select"
+            component={SemanticFormField}
+            as={SemanticForm.Dropdown}
+            placeholder="Bracket Size"
+            selection
+            options={[
+              { key: 4, value: 4, text: '4' },
+              { key: 8, value: 8, text: '8' },
+              { key: 16, value: 16, text: '16' },
+              { key: 32, value: 32, text: '32' }
+            ]}
+            validate={[required]}
+          />
+        </label>
         <Button animated disabled={submitting || invalid}>
           <Button.Content visible>Next</Button.Content>
           <Button.Content hidden>
