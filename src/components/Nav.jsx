@@ -1,13 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Icon, Menu } from 'semantic-ui-react';
 
 import { auth } from 'storage';
 
-export default class Nav extends Component<{ authUser: boolean }, { activeItem: string }> {
+export default class Nav extends Component<{}, { activeItem: string }> {
   state = {
     activeItem: ''
   };
@@ -16,7 +16,7 @@ export default class Nav extends Component<{ authUser: boolean }, { activeItem: 
 
   render() {
     const { activeItem } = this.state;
-    const { authUser } = this.props;
+    const { authUser } = this.context;
 
     return (
       <Menu inverted size="large">
@@ -65,3 +65,7 @@ export default class Nav extends Component<{ authUser: boolean }, { activeItem: 
     );
   }
 }
+
+Nav.contextTypes = {
+  authUser: PropTypes.object
+};
