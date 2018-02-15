@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-
 import { Container, Header, Icon, Step } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import Configure from 'components/Configure';
 import Finalize from 'components/Finalize';
@@ -115,7 +115,6 @@ export default class Steps extends React.Component<{}, { currentStep: string, cu
             );
           })}
         </Step.Group>
-
         {this.renderStep(currentStep)}
       </Container>
     );

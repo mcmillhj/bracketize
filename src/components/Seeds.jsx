@@ -1,7 +1,7 @@
 import React from 'react';
 import { getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
-import { Button, Card, Form as SemanticForm, Grid, Icon, Image, Search } from 'semantic-ui-react';
+import { Button, Card, Form as SemanticForm, Grid, Icon, Image, Popup, Search } from 'semantic-ui-react';
 import styled from 'styled-components';
 import _ from 'lodash';
 import elasticsearch from 'elasticsearch';
@@ -12,12 +12,13 @@ const ButtonsContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: ${10 / 16}rem;
+  margin: ${10 / 16}rem 0;
 `;
 
 const Center = styled.section`
-  text-align: center;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const CloseButton = styled(Button)`
@@ -35,9 +36,10 @@ const CardImageContainer = styled.section`
   position: relative;
 `;
 
-const SearchBox = styled(Search)`
+const SearchInput = styled(Search)`
   &&& {
     border-radius: 0;
+    margin-bottom: ${10 / 16}rem;
   }
 `;
 
@@ -115,9 +117,9 @@ class Seeds extends React.Component {
     const { isLoading, value, results } = this.state;
 
     return (
-      <SemanticForm>
+      <SemanticForm onSubmit={this.onSubmit}>
         <Center>
-          <SearchBox
+          <SearchInput
             selectFirstResult
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
@@ -125,52 +127,50 @@ class Seeds extends React.Component {
             results={results}
             value={value}
           />
-
-          {seeds.length > 0 && (
-            <Grid doubling stretched columns={4}>
-              {seeds.map(c => (
-                <Grid.Column key={c.title}>
-                  <Card>
-                    <CardImageContainer>
-                      <Image src={c.image} />
-                      <CloseButton
-                        icon={<Icon name="close" />}
-                        onClick={e => {
-                          e.preventDefault();
-
-                          this.props.removeSeed(c);
-                        }}
-                      />
-                    </CardImageContainer>
-                    <Card.Content textAlign={'left'}>
-                      <Card.Header>{c.title}</Card.Header>
-                      <Card.Meta>
-                        <span className="date">{`${c.start_year} - ${c.end_year}`}</span>
-                      </Card.Meta>
-                      {/* <Card.Description>{c.synopsis.substring(0, 197) + '...'}</Card.Description> */}
-                    </Card.Content>
-                  </Card>
-                </Grid.Column>
-              ))}
-            </Grid>
-          )}
-
-          <ButtonsContainer>
-            <Button animated type="button" onClick={() => this.props.back()}>
-              <Button.Content visible>Back</Button.Content>
-              <Button.Content hidden>
-                <Icon name="left arrow" />
-              </Button.Content>
-            </Button>
-
-            <Button animated disabled={seeds.length !== bracketSize}>
-              <Button.Content visible>Next</Button.Content>
-              <Button.Content hidden>
-                <Icon name="right arrow" />
-              </Button.Content>
-            </Button>
-          </ButtonsContainer>
         </Center>
+
+        {seeds.length > 0 && (
+          <Grid doubling stretched columns={4}>
+            {seeds.map(c => (
+              <Grid.Column key={c.title}>
+                <Card>
+                  <CardImageContainer>
+                    <Image src={c.image} />
+                    <CloseButton
+                      icon={<Icon name="close" />}
+                      onClick={e => {
+                        e.preventDefault();
+
+                        this.props.removeSeed(c);
+                      }}
+                    />
+                  </CardImageContainer>
+                  <Card.Content textAlign={'left'}>
+                    <Card.Header>{c.title}</Card.Header>
+                    <Card.Meta>
+                      <span className="date">{`${c.start_year} - ${c.end_year}`}</span>
+                    </Card.Meta>
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            ))}
+          </Grid>
+        )}
+
+        <ButtonsContainer>
+          <Button animated type="button" onClick={() => this.props.back()}>
+            <Button.Content visible>Back</Button.Content>
+            <Button.Content hidden>
+              <Icon name="left arrow" />
+            </Button.Content>
+          </Button>
+          <Button animated disabled={seeds.length !== bracketSize}>
+            <Button.Content visible>Next</Button.Content>
+            <Button.Content hidden>
+              <Icon name="right arrow" />
+            </Button.Content>
+          </Button>
+        </ButtonsContainer>
       </SemanticForm>
     );
   }
