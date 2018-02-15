@@ -36,6 +36,7 @@ const SignInPage = ({ history }) => (
   <FormFieldsContainer>
     <SignInForm history={history} />
     <ForgotPasswordLink />
+    <br />
     <SignUpLink />
   </FormFieldsContainer>
 );

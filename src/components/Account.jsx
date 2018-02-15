@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Container, Header } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { ForgotPasswordForm } from 'components/ForgotPassword';
 import ChangePasswordForm from 'components/ChangePassword';
 
 const AccountContainer = styled(Container)`
@@ -26,9 +25,6 @@ const AccountHeader = styled(Header)`
 const AccountPage = (props: Object, { authUser }: { authUser: Object | null }) => (
   <AccountContainer>
     <AccountHeader>Logged in as {authUser && authUser.email}</AccountHeader>
-    <AccountHeader sub>Forgot your Password?</AccountHeader>
-    <ForgotPasswordForm />
-    <br />
     <AccountHeader sub>Change your Password?</AccountHeader>
     <ChangePasswordForm />
   </AccountContainer>

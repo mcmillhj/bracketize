@@ -31,9 +31,11 @@ const SignUpButton = styled(Button)`
 `;
 
 const SignUpPage = ({ history }) => (
-  <div>
+  <FormFieldsContainer>
     <SignUpForm history={history} />
-  </div>
+    <br />
+    <SignInLink />
+  </FormFieldsContainer>
 );
 
 const INITIAL_STATE = {
@@ -52,12 +54,12 @@ class SignUpForm extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne } = this.state;
+    const { email, passwordOne } = this.state;
     const { history } = this.props;
 
     auth
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
+      .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
         history.push('/');
       })
@@ -114,6 +116,12 @@ class SignUpForm extends Component {
 const SignUpLink = () => (
   <p>
     Don't have an account? <Link to={'/signup'}>Sign Up</Link>
+  </p>
+);
+
+const SignInLink = () => (
+  <p>
+    Already have an account? <Link to={'/signin'}>Sign In</Link>
   </p>
 );
 

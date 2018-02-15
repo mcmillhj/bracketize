@@ -5,15 +5,11 @@ import PropTypes from 'prop-types';
 
 import { firebase } from 'storage';
 
-const withAuth = Component => {
+const withAuth = (Component: any) => {
   class WithAuthentication extends React.Component<{}, { authUser: Object | null }> {
     state = {
       authUser: null
     };
-
-    constructor(props: Object) {
-      super(props);
-    }
 
     getChildContext() {
       return {
