@@ -12,7 +12,7 @@ const ButtonsContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: ${10 / 16}rem;
 `;
 
 const Center = styled.section`
@@ -25,7 +25,7 @@ const CloseButton = styled(Button)`
     position: absolute;
     top: 0;
     right: 0;
-    padding: 5px;
+    padding: ${5 / 16}rem;
     margin: 0;
     border-radius: 0;
   }

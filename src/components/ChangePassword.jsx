@@ -71,12 +71,14 @@ class ChangePassword extends Component {
             type="password"
             placeholder="New Password"
           />
+
           <ChangePasswordInput
             value={passwordTwo}
             onChange={event => this.setState({ passwordTwo: event.target.value })}
             type="password"
             placeholder="Confirm New Password"
           />
+
           <ChangePasswordButton disabled={isInvalid} type="submit">
             Change Password
           </ChangePasswordButton>

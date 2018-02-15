@@ -5,7 +5,7 @@ import { Button, Form as SemanticForm, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 const ErrorText = styled.span`
-  font-size: 12px;
+  font-size: ${12 / 16}rem;
   color: red;
 `;
 
