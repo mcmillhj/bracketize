@@ -15,20 +15,20 @@ const FormFieldsContainer = styled.section`
 `;
 
 const ErrorText = styled.span`
-  font-size: 12px;
+  font-size: ${12 / 16}rem;
   color: red;
 `;
 
 const SignInInput = styled(Input)`
   &&& {
     min-width: 20rem;
-    margin-bottom: 10px;
+    font-size: ${10 / 16}rem;
   }
 `;
 
 const SignInButton = styled(Button)`
   &&& {
-    margin-bottom: 10px;
+    font-size: ${10 / 16}rem;
   }
 `;
 

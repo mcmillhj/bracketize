@@ -13,20 +13,20 @@ const FormFieldsContainer = styled.section`
 `;
 
 const ErrorText = styled.span`
-  font-size: 12px;
+  font-size: ${12 / 16}rem;
   color: red;
 `;
 
 const ForgotPasswordInput = styled(Input)`
   &&& {
     min-width: 20rem;
-    margin-bottom: 10px;
+    margin-bottom: ${10 / 16}rem;
   }
 `;
 
 const ForgotPasswordButton = styled(Button)`
   &&& {
-    margin-bottom: 10px;
+    margin-bottom: ${10 / 16}rem;
   }
 `;
 
