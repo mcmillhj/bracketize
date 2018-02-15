@@ -22,13 +22,13 @@ const ErrorText = styled.span`
 const SignInInput = styled(Input)`
   &&& {
     min-width: 20rem;
-    font-size: ${10 / 16}rem;
+    margin-bottom: ${10 / 16}rem;
   }
 `;
 
 const SignInButton = styled(Button)`
   &&& {
-    font-size: ${10 / 16}rem;
+    margin-bottom: ${10 / 16}rem;
   }
 `;
 
