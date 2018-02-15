@@ -74,7 +74,7 @@ export default class Nav extends Component<{}, { activeItem: string }> {
               name="login"
               active={activeItem === 'login'}
               onClick={this.handleItemClick}>
-              Login / Sign Up
+              Login
             </Menu.Item>
           )}
         </Menu.Menu>
