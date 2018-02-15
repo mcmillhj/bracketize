@@ -79,7 +79,7 @@ class ForgotPasswordForm extends Component {
             placeholder="Email Address"
           />
           <ForgotPasswordButton disabled={isInvalid} type="submit">
-            Reset My Password
+            Send Reset Link
           </ForgotPasswordButton>
 
           {error && <ErrorText>{error.message}</ErrorText>}

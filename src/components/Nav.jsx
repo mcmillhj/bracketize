@@ -47,9 +47,26 @@ export default class Nav extends Component<{}, { activeItem: string }> {
 
         <Menu.Menu position="right">
           {authUser ? (
-            <Menu.Item as={Link} to="/" name="signout" active={activeItem === 'signout'} onClick={auth.doSignOut}>
-              Sign Out
-            </Menu.Item>
+            [
+              <Menu.Item
+                key="account"
+                as={Link}
+                to="/account"
+                name="account"
+                active={activeItem === 'account'}
+                onClick={this.handleItemClick}>
+                Account
+              </Menu.Item>,
+              <Menu.Item
+                key="signout"
+                as={Link}
+                to="/"
+                name="signout"
+                active={activeItem === 'signout'}
+                onClick={auth.doSignOut}>
+                Sign Out
+              </Menu.Item>
+            ]
           ) : (
             <Menu.Item
               as={Link}
