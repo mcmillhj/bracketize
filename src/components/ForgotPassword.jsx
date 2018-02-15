@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Form as SemanticForm, Input } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { ForgotPasswordLink } from 'components/ForgotPassword';
-import { SignUpLink } from 'components/SignUp';
 import { auth } from 'storage';
 
 const FormFieldsContainer = styled.section`
@@ -19,34 +17,32 @@ const ErrorText = styled.span`
   color: red;
 `;
 
-const SignInInput = styled(Input)`
+const ForgotPasswordInput = styled(Input)`
   &&& {
     min-width: 20rem;
     margin-bottom: 10px;
   }
 `;
 
-const SignInButton = styled(Button)`
+const ForgotPasswordButton = styled(Button)`
   &&& {
     margin-bottom: 10px;
   }
 `;
 
-const SignInPage = ({ history }) => (
-  <FormFieldsContainer>
-    <SignInForm history={history} />
-    <ForgotPasswordLink />
-    <SignUpLink />
-  </FormFieldsContainer>
+const ForgotPasswordPage = () => (
+  <div>
+    <h1>Forgot Password</h1>
+    <ForgotPasswordForm />
+  </div>
 );
 
 const INITIAL_STATE = {
   email: '',
-  password: '',
   error: null
 };
 
-class SignInForm extends Component {
+class ForgotPasswordForm extends Component {
   constructor(props) {
     super(props);
 
@@ -54,15 +50,12 @@ class SignInForm extends Component {
   }
 
   onSubmit = event => {
-    const { email, password } = this.state;
-
-    const { history } = this.props;
+    const { email } = this.state;
 
     auth
-      .doSignInWithEmailAndPassword(email, password)
+      .doPasswordReset(email)
       .then(() => {
         this.setState(() => ({ ...INITIAL_STATE }));
-        history.push('/');
       })
       .catch(error => {
         this.setState({ error });
@@ -72,28 +65,22 @@ class SignInForm extends Component {
   };
 
   render() {
-    const { email, password, error } = this.state;
+    const { email, error } = this.state;
 
-    const isInvalid = password === '' || email === '';
+    const isInvalid = email === '';
 
     return (
       <SemanticForm onSubmit={this.onSubmit}>
         <FormFieldsContainer>
-          <SignInInput
-            value={email}
+          <ForgotPasswordInput
+            value={this.state.email}
             onChange={event => this.setState({ email: event.target.value })}
             type="text"
             placeholder="Email Address"
           />
-          <SignInInput
-            value={password}
-            onChange={event => this.setState({ password: event.target.value })}
-            type="password"
-            placeholder="Password"
-          />
-          <SignInButton disabled={isInvalid} type="submit">
-            Sign In
-          </SignInButton>
+          <ForgotPasswordButton disabled={isInvalid} type="submit">
+            Reset My Password
+          </ForgotPasswordButton>
 
           {error && <ErrorText>{error.message}</ErrorText>}
         </FormFieldsContainer>
@@ -102,6 +89,12 @@ class SignInForm extends Component {
   }
 }
 
-export default withRouter(SignInPage);
+const ForgotPasswordLink = () => (
+  <p>
+    <Link to="/forgot-password">Forgot Password?</Link>
+  </p>
+);
 
-export { SignInForm };
+export default ForgotPasswordPage;
+
+export { ForgotPasswordForm, ForgotPasswordLink };

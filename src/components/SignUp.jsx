@@ -12,9 +12,20 @@ const FormFieldsContainer = styled.section`
   justify-content: space-between;
 `;
 
+const ErrorText = styled.span`
+  font-size: 12px;
+  color: red;
+`;
+
 const SignUpInput = styled(Input)`
   &&& {
     min-width: 20rem;
+    margin-bottom: 10px;
+  }
+`;
+
+const SignUpButton = styled(Button)`
+  &&& {
     margin-bottom: 10px;
   }
 `;
@@ -91,11 +102,11 @@ class SignUpForm extends Component {
             type="password"
             placeholder="Confirm Password"
           />
-          <Button disabled={isInvalid} type="submit">
+          <SignUpButton disabled={isInvalid} type="submit">
             Sign Up
-          </Button>
+          </SignUpButton>
 
-          {error && <p>{error.message}</p>}
+          {error && <ErrorText>{error.message}</ErrorText>}
         </FormFieldsContainer>
       </SemanticForm>
     );

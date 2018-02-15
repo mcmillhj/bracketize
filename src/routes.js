@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Bracket from 'components/Bracket';
 import Brackets from 'components/Brackets';
 import CreateBracket from 'components/CreateBracket';
+import ForgotPassword from 'components/ForgotPassword';
 import Home from 'components/Home';
 import SignIn from 'components/SignIn';
 import SignUp from 'components/SignUp';
@@ -17,6 +18,7 @@ export default () => (
       <Route path="/create-bracket" component={CreateBracket} />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/forgot-password" component={ForgotPassword} />
       <Route
         component={({ location }) => (
           <div>
