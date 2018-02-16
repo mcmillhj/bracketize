@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Form as SemanticForm, Input } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { auth } from 'storage';
+import { auth, db } from 'storage';
 
 const FormFieldsContainer = styled.section`
   display: flex;
@@ -54,14 +54,21 @@ class SignUpForm extends Component {
   }
 
   onSubmit = event => {
-    const { email, passwordOne } = this.state;
+    const { username, email, passwordOne } = this.state;
     const { history } = this.props;
 
     auth
       .doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-        history.push('/');
+      .then(authUser => {
+        db
+          .doCreateUser(authUser.uid, username, email)
+          .then(() => {
+            this.setState(() => ({ ...INITIAL_STATE }));
+            history.push('/');
+          })
+          .catch(error => {
+            this.setState({ error });
+          });
       })
       .catch(error => {
         this.setState({ error });
@@ -84,24 +91,28 @@ class SignUpForm extends Component {
             type="text"
             placeholder="Full Name"
           />
+
           <SignUpInput
             value={email}
             onChange={event => this.setState({ email: event.target.value })}
             type="email"
             placeholder="Email Address"
           />
+
           <SignUpInput
             value={passwordOne}
             onChange={event => this.setState({ passwordOne: event.target.value })}
             type="password"
             placeholder="Password"
           />
+
           <SignUpInput
             value={passwordTwo}
             onChange={event => this.setState({ passwordTwo: event.target.value })}
             type="password"
             placeholder="Confirm Password"
           />
+
           <SignUpButton disabled={isInvalid} type="submit">
             Sign Up
           </SignUpButton>

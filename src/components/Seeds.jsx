@@ -1,7 +1,7 @@
 import React from 'react';
 import { getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
-import { Button, Card, Form as SemanticForm, Grid, Icon, Image, Popup, Search } from 'semantic-ui-react';
+import { Button, Card, Form as SemanticForm, Grid, Icon, Image, Search } from 'semantic-ui-react';
 import styled from 'styled-components';
 import _ from 'lodash';
 import elasticsearch from 'elasticsearch';
@@ -70,9 +70,12 @@ class Seeds extends React.Component {
         .then(response => {
           this.setState({
             isLoading: false,
-            results: _.sortedUniqBy(
-              _.flattenDeep(response.suggest.title_suggest.map(h => h.options.map(e => this.transform(e)))),
-              s => s.title
+            results: _.take(
+              _.sortedUniqBy(
+                _.flattenDeep(response.suggest.title_suggest.map(h => h.options.map(e => this.transform(e)))),
+                s => s.title
+              ),
+              10
             )
           });
         })

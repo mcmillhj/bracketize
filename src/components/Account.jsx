@@ -1,11 +1,12 @@
 // @flow
 
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Container, Header } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import ChangePasswordForm from 'components/ChangePassword';
+import withAuthorization from 'hoc/withAuthorization';
 
 const AccountContainer = styled(Container)`
   &&& {
@@ -22,7 +23,7 @@ const AccountHeader = styled(Header)`
   }
 `;
 
-const AccountPage = (props: Object, { authUser }: { authUser: Object | null }) => (
+const AccountPage = ({ authUser }: { authUser: Object | null }) => (
   <AccountContainer>
     <AccountHeader>Logged in as {authUser && authUser.email}</AccountHeader>
     <AccountHeader sub>Change your Password?</AccountHeader>
@@ -30,8 +31,8 @@ const AccountPage = (props: Object, { authUser }: { authUser: Object | null }) =
   </AccountContainer>
 );
 
-AccountPage.contextTypes = {
-  authUser: PropTypes.object
-};
-
-export default AccountPage;
+export default withAuthorization(
+  connect(state => ({
+    authUser: state.auth.authUser
+  }))(AccountPage)
+);

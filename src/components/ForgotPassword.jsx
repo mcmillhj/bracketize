@@ -78,6 +78,7 @@ class ForgotPasswordForm extends Component {
             type="text"
             placeholder="Email Address"
           />
+
           <ForgotPasswordButton disabled={isInvalid} type="submit">
             Send Reset Link
           </ForgotPasswordButton>

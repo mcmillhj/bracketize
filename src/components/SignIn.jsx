@@ -86,12 +86,14 @@ class SignInForm extends Component {
             type="text"
             placeholder="Email Address"
           />
+
           <SignInInput
             value={password}
             onChange={event => this.setState({ password: event.target.value })}
             type="password"
             placeholder="Password"
           />
+
           <SignInButton disabled={isInvalid} type="submit">
             Sign In
           </SignInButton>

@@ -1,13 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Icon, Menu } from 'semantic-ui-react';
 
 import { auth } from 'storage';
 
-export default class Nav extends Component<{}, { activeItem: string }> {
+class Nav extends Component<{ authUser: Object | null }, { activeItem: string }> {
   state = {
     activeItem: ''
   };
@@ -16,13 +16,14 @@ export default class Nav extends Component<{}, { activeItem: string }> {
 
   render() {
     const { activeItem } = this.state;
-    const { authUser } = this.context;
+    const { authUser } = this.props;
 
     return (
       <Menu inverted size="large">
         <Menu.Item as={Link} to="/">
           <Icon name="code" size="large" />
         </Menu.Item>
+
         {authUser && (
           <Menu.Item
             as={Link}
@@ -83,6 +84,6 @@ export default class Nav extends Component<{}, { activeItem: string }> {
   }
 }
 
-Nav.contextTypes = {
-  authUser: PropTypes.object
-};
+export default connect(state => ({
+  authUser: state.auth.authUser
+}))(Nav);

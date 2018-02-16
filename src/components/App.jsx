@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import Nav from 'components/Nav';
 import Routes from 'routes';
-import withAuth from 'hoc/withAuth';
+import withAuthentication from 'hoc/withAuthentication';
 
 const App = () => (
   <BrowserRouter>
@@ -16,4 +16,4 @@ const App = () => (
   </BrowserRouter>
 );
 
-export default withAuth(App);
+export default withAuthentication(App);
