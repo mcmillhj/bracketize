@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { firebase } from 'storage';
+import { firebase } from 'firebaze';
 import { setAuthUser } from 'state/auth';
 
 const withAuth = (Component: any) => {

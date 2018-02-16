@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Form as SemanticForm, Input } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { auth } from 'storage';
+import { auth } from 'firebaze';
 
 const FormFieldsContainer = styled.section`
   display: flex;

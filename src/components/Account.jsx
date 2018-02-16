@@ -1,11 +1,13 @@
 // @flow
 
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Container, Header } from 'semantic-ui-react';
+import { Button, Container, Header, Icon, Modal } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import ChangePasswordForm from 'components/ChangePassword';
+import { auth, db } from 'firebaze';
 import withAuthorization from 'hoc/withAuthorization';
 
 const AccountContainer = styled(Container)`
@@ -23,16 +25,91 @@ const AccountHeader = styled(Header)`
   }
 `;
 
-const AccountPage = ({ authUser }: { authUser: Object | null }) => (
+const ErrorText = styled.span`
+  font-size: ${12 / 16}rem;
+  color: red;
+`;
+
+class DeleteAccountModal extends React.Component<
+  { history: Object, authUser: Object | null },
+  { modalOpen: boolean, error: Object | null }
+> {
+  state = { modalOpen: false, error: null };
+
+  handleOpen = () => this.setState({ modalOpen: true });
+
+  handleClose = () => this.setState({ modalOpen: false });
+
+  deleteAccount = () => {
+    const { authUser, history } = this.props;
+
+    db
+      .doDeleteUser(authUser.uid)
+      .then(() => {
+        auth
+          .doDeleteUserAuth()
+          .then(() => history.push('/'))
+          .catch(error => {
+            this.setState({ error });
+          });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+
+  render() {
+    const { error } = this.state;
+
+    return (
+      <Modal
+        open={this.state.modalOpen}
+        onClose={this.handleClose}
+        trigger={
+          <Button negative onClick={this.handleOpen}>
+            Delete Account
+          </Button>
+        }
+        size="small">
+        <Header icon="user delete" content="Delete Your Account" />
+        <Modal.Content>
+          <p>Are you sure you want to delete your account? This action is not reversible</p>
+
+          {error && <ErrorText>{error.message}</ErrorText>}
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="red" inverted onClick={this.handleClose}>
+            <Icon name="remove" /> No
+          </Button>
+          <Button
+            color="green"
+            inverted
+            onClick={() => {
+              this.deleteAccount();
+              this.handleClose();
+            }}>
+            <Icon name="checkmark" /> Yes
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  }
+}
+
+const AccountPage = ({ authUser, history }: { authUser: Object | null, history: Object }) => (
   <AccountContainer>
     <AccountHeader>Logged in as {authUser && authUser.email}</AccountHeader>
     <AccountHeader sub>Change your Password?</AccountHeader>
     <ChangePasswordForm />
+    <AccountHeader>Delete your account?</AccountHeader>
+    <DeleteAccountModal authUser={authUser} history={history} />
   </AccountContainer>
 );
 
-export default withAuthorization(
-  connect(state => ({
-    authUser: state.auth.authUser
-  }))(AccountPage)
+export default withRouter(
+  withAuthorization(
+    connect(state => ({
+      authUser: state.auth.authUser
+    }))(AccountPage)
+  )
 );

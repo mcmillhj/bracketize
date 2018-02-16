@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Header } from 'semantic-ui-react';
 
-import { firebase } from 'storage';
+import { firebase } from 'firebaze';
 
 const withAuthorization = Component => {
   class WithAuthorization extends React.Component {

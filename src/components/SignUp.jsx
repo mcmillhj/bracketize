@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Form as SemanticForm, Input } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { auth, db } from 'storage';
+import { auth, db } from 'firebaze';
 
 const FormFieldsContainer = styled.section`
   display: flex;

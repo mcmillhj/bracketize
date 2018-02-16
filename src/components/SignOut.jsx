@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { auth } from 'storage';
+import { auth } from 'firebaze';
 
 const SignOutButton = () => (
   <button type="button" onClick={auth.doSignOut}>

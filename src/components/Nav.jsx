@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Icon, Menu } from 'semantic-ui-react';
 
-import { auth } from 'storage';
+import { auth } from 'firebaze';
 
 class Nav extends Component<{ authUser: Object | null }, { activeItem: string }> {
   state = {

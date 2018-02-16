@@ -6,6 +6,7 @@ import { Container, Header, Icon, Step } from 'semantic-ui-react';
 import Configure from 'components/Configure';
 import Finalize from 'components/Finalize';
 import Seeds from 'components/Seeds';
+import withAuthorization from 'hoc/withAuthorization';
 
 const steps = [
   {
@@ -37,7 +38,7 @@ const steps = [
   }
 ];
 
-export default class Steps extends React.Component<{}, { currentStep: string, currentIndex: number }> {
+class Steps extends React.Component<{}, { currentStep: string, currentIndex: number }> {
   state = {
     currentStep: 'Configure',
     currentIndex: 0
@@ -119,3 +120,5 @@ export default class Steps extends React.Component<{}, { currentStep: string, cu
     );
   }
 }
+
+export default withAuthorization(Steps);

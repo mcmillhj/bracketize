@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { ForgotPasswordLink } from 'components/ForgotPassword';
 import { SignUpLink } from 'components/SignUp';
-import { auth } from 'storage';
+import { auth } from 'firebaze';
 
 const FormFieldsContainer = styled.section`
   display: flex;
