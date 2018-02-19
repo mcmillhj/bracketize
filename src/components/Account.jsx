@@ -31,7 +31,7 @@ const ErrorText = styled.span`
 `;
 
 class DeleteAccountModal extends React.Component<
-  { history: Object, authUser: Object | null },
+  { redirectToHome: Function, authUser: Object | null },
   { modalOpen: boolean, error: Object | null }
 > {
   state = { modalOpen: false, error: null };
@@ -41,14 +41,14 @@ class DeleteAccountModal extends React.Component<
   handleClose = () => this.setState({ modalOpen: false });
 
   deleteAccount = () => {
-    const { authUser, history } = this.props;
+    const { authUser, redirectToHome } = this.props;
 
     db
       .doDeleteUser(authUser.uid)
       .then(() => {
         auth
           .doDeleteUserAuth()
-          .then(() => history.push('/'))
+          .then(() => redirectToHome())
           .catch(error => {
             this.setState({ error });
           });
@@ -102,7 +102,7 @@ const AccountPage = ({ authUser, history }: { authUser: Object | null, history: 
     <AccountHeader sub>Change your Password?</AccountHeader>
     <ChangePasswordForm />
     <AccountHeader>Delete your account?</AccountHeader>
-    <DeleteAccountModal authUser={authUser} history={history} />
+    <DeleteAccountModal authUser={authUser} redirectToHome={() => history.push('/')} />
   </AccountContainer>
 );
 

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import elasticsearch from 'elasticsearch';
 
+import { createBracket } from 'state/createBracket';
 import { addSeed, removeSeed } from 'state/seeds';
 
 const ButtonsContainer = styled.section`
@@ -88,7 +89,6 @@ class Seeds extends React.Component {
   };
 
   transform = e => ({
-    _source: e._source,
     ...e._source,
     description: `${e._source.start_year} - ${e._source.end_year}`,
     title: e._source.title_en || e._source.title
@@ -112,6 +112,9 @@ class Seeds extends React.Component {
   }
 
   onSubmit = () => {
+    const { authUser, seeds } = this.props;
+
+    this.props.createBracket({ authUser, seeds });
     this.props.next();
   };
 
@@ -179,7 +182,15 @@ class Seeds extends React.Component {
   }
 }
 
-export default connect(state => ({ seeds: state.seeds, bracketSize: getFormValues('configure')(state).bracketSize }), {
-  addSeed,
-  removeSeed
-})(Seeds);
+export default connect(
+  state => ({
+    seeds: state.seeds,
+    authUser: state.auth.authUser,
+    bracketSize: getFormValues('configure')(state).bracketSize
+  }),
+  {
+    addSeed,
+    removeSeed,
+    createBracket
+  }
+)(Seeds);
