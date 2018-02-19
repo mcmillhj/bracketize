@@ -8,13 +8,15 @@ export const getBrackets = (authUser: Object) => (dispatch: Function) => {
   const bracketsRef = db.subscribeBrackets(authUser.uid);
 
   bracketsRef.on('value', snapshot => {
-    dispatch({
-      type: reducerTypes.GET_BRACKETS,
-      payload: Object.keys(snapshot.val()).map(k => ({
-        id: k,
-        ...snapshot.val()[k]
-      }))
-    });
+    if (snapshot && snapshot.val()) {
+      dispatch({
+        type: reducerTypes.GET_BRACKETS,
+        payload: Object.keys(snapshot.val()).map(k => ({
+          id: k,
+          ...snapshot.val()[k]
+        }))
+      });
+    }
   });
 };
 

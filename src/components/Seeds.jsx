@@ -115,11 +115,16 @@ class Seeds extends React.Component {
     const { authUser, seeds, bracketName, bracketSize } = this.props;
 
     this.props.createBracket(authUser, {
-      seeds,
+      seeds: seeds.map((s, i) => ({
+        ...s,
+        seed: i + 1,
+        votes: new Array(Math.floor(Math.log2(seeds.length))).fill(0)
+      })),
       created: Date.now(),
       name: bracketName,
       size: bracketSize,
-      status: 'IN_PROGRESS'
+      complete: false,
+      round: 1
     });
     this.props.next();
   };

@@ -39,7 +39,7 @@ class Brackets extends React.Component<{ authUser: Object | null, brackets: Arra
               <List>
                 <List.Item>{`Created Date: ${new Date(b.created).toUTCString()}`}</List.Item>
                 <List.Item>{`Number of seeds: ${b.size}`}</List.Item>
-                <List.Item>{`Status: ${b.status}`}</List.Item>
+                <List.Item>{`Complete: ${b.complete}`}</List.Item>
               </List>
               <br />
             </BracketButton>

@@ -3,8 +3,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Header } from 'semantic-ui-react';
+import styled from 'styled-components';
 
+import Final from 'components/Final';
+import Round from 'components/Round';
 import { getBracket } from 'state/bracket';
+import { bracketify } from 'utils/helpers';
+
+const Split = styled.section`
+  color: blue;
+`;
 
 class Bracket extends React.Component<{
   authUser: Object | null,
@@ -27,21 +35,49 @@ class Bracket extends React.Component<{
   render() {
     const { bracket } = this.props;
 
-    return (
-      <Container>
-        {bracket && (
-          <div>
-            <Header as="h1">{bracket.name}</Header>
-            <Header as="h3">
-              <u>{bracket.id}</u>
-            </Header>
-            <p>{`Created At: ${bracket.created}`}</p>
-            <ul>{bracket.seeds.map(s => <li key={s.title_en}>{s.title_en}</li>)}</ul>
-            <br />
-          </div>
-        )}
-      </Container>
-    );
+    if (bracket) {
+      const { complete, name, round, seeds } = bracket;
+      const numberOfRounds = Math.floor(Math.log2(seeds.length));
+      const [left, champion, right] = bracketify(bracket);
+
+      return (
+        <Container>
+          {bracket && (
+            <div>
+              <Header as="h1">{name}</Header>
+              <Split split={1}>
+                {left.map((e, i) => (
+                  <Round key={`split-1-round-${i}`} elements={e} current={round === i + 1} round={i + 1} />
+                ))}
+              </Split>
+
+              {champion.map((e, i) => (
+                <Final
+                  key={`champion-${i}`}
+                  champion={e}
+                  complete={complete}
+                  round={round}
+                  current={round === numberOfRounds && !complete}
+                />
+              ))}
+
+              <Split split={2}>
+                {right.map((e, i) => (
+                  <Round
+                    key={`split-2-round-${i}`}
+                    elements={e}
+                    current={round === numberOfRounds - i - 1}
+                    round={numberOfRounds - 1 - i}
+                  />
+                ))}
+              </Split>
+            </div>
+          )}
+        </Container>
+      );
+    }
+
+    return null;
   }
 }
 

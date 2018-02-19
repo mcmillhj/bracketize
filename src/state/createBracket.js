@@ -18,7 +18,7 @@ export const createBracket = (authUser: Object, payload: Object) => (dispatch: F
 
 export const createBracketComplete = (payload: Object) => ({ type: reducerTypes.CREATE_BRACKET, payload });
 export const createBracketRequest = () => ({ type: reducerTypes.CREATE_BRACKET_REQUEST });
-export const createBracketFailed = () => ({ type: reducerTypes.CREATE_BRACKET_FAILURE });
+export const createBracketFailed = (error: Object) => ({ type: reducerTypes.CREATE_BRACKET_FAILURE, payload: error });
 
 // reducer
 
@@ -29,7 +29,7 @@ const initialState = {
   id: null
 };
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (state: Object = initialState, action: Object) => {
   switch (action.type) {
     case reducerTypes.CREATE_BRACKET_REQUEST:
       return Object.assign({}, state, {
