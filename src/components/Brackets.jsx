@@ -2,13 +2,28 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Header } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Button, Container, Header, List } from 'semantic-ui-react';
+import styled from 'styled-components';
 
-import { watchBrackets } from 'state/brackets';
+import { getBrackets } from 'state/brackets';
 
-class Brackets extends React.Component<{ authUser: Object | null, brackets: Array<Object> }> {
+const BracketButton = styled(Button)`
+  &&& {
+    text-align: left;
+    margin-bottom: ${5 / 16}rem;
+  }
+`;
+
+class Brackets extends React.Component<{ authUser: Object | null, brackets: Array<Object>, getBrackets: Function }> {
   componentWillReceiveProps(nextProps) {
-    nextProps.authUser && !this.props.authUser && this.props.watchBrackets(nextProps.authUser);
+    nextProps.authUser && !this.props.authUser && this.props.getBrackets(nextProps.authUser);
+  }
+
+  componentDidMount() {
+    const { authUser } = this.props;
+
+    authUser && this.props.getBrackets(authUser);
   }
 
   render() {
@@ -19,13 +34,15 @@ class Brackets extends React.Component<{ authUser: Object | null, brackets: Arra
         <Header as="h1">My Brackets</Header>
         {brackets &&
           brackets.map(b => (
-            <div key={b.id}>
-              <Header as="h3">
-                <u>{b.id}</u>
-              </Header>
-              <ul>{b.seeds.map(s => <li key={s.title_en}>{s.title_en}</li>)}</ul>
+            <BracketButton as={Link} key={b.id} to={`/brackets/${b.id}`}>
+              <Header as="h4">{b.name}</Header>
+              <List>
+                <List.Item>{`Created Date: ${new Date(b.created).toUTCString()}`}</List.Item>
+                <List.Item>{`Number of seeds: ${b.size}`}</List.Item>
+                <List.Item>{`Status: ${b.status}`}</List.Item>
+              </List>
               <br />
-            </div>
+            </BracketButton>
           ))}
       </Container>
     );
@@ -37,5 +54,5 @@ export default connect(
     authUser: state.auth.authUser,
     brackets: state.brackets
   }),
-  { watchBrackets }
+  { getBrackets }
 )(Brackets);

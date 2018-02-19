@@ -1,14 +1,21 @@
 // @flow
+import _ from 'lodash';
 
 import * as reducerTypes from 'constants/reducerTypes';
 import { db } from 'firebaze';
 
-export const watchBrackets = (authUser: Object) => (dispatch: Function) => {
+export const getBrackets = (authUser: Object) => (dispatch: Function) => {
   const bracketsRef = db.subscribeBrackets(authUser.uid);
 
-  bracketsRef.on('child_added', snapshot =>
-    dispatch({ type: reducerTypes.WATCH_BRACKETS, payload: { ...snapshot.val(), id: snapshot.key } })
-  );
+  bracketsRef.on('value', snapshot => {
+    dispatch({
+      type: reducerTypes.GET_BRACKETS,
+      payload: Object.keys(snapshot.val()).map(k => ({
+        id: k,
+        ...snapshot.val()[k]
+      }))
+    });
+  });
 };
 
 // reducer
@@ -16,8 +23,8 @@ const initialState = [];
 
 export const reducer = (state = initialState, action: Object) => {
   switch (action.type) {
-    case reducerTypes.WATCH_BRACKETS:
-      return [...state, action.payload];
+    case reducerTypes.GET_BRACKETS:
+      return _.uniqBy([...state, ...action.payload], b => b.id);
     default:
       return state;
   }

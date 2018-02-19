@@ -21,6 +21,6 @@ export const subscribeBrackets = user_id => bracketsRef(user_id);
 
 export const subscribeBracket = (user_id, id) => bracketRef(user_id, id);
 
-export const doCreateBracket = (user_id, seeds) => bracketsRef(user_id).push({ seeds, created: Date.now() });
+export const doCreateBracket = (user_id, payload) => bracketsRef(user_id).push(payload);
 
 export const doDeleteBracket = (user_id, id) => bracketRef(user_id, id).remove();

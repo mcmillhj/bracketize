@@ -3,14 +3,14 @@
 import * as reducerTypes from 'constants/reducerTypes';
 import { db } from 'firebaze';
 
-export const watchBracket = (authUser: Object, bracketId: number) => (dispatch: Function) => {
+export const getBracket = (authUser: Object, bracketId: number) => (dispatch: Function) => {
   const bracketRef = db.subscribeBracket(authUser.uid, bracketId);
 
-  bracketRef.on('child_added', snapshot => {
-    console.log('VALUE = ', snapshot.ref.parent);
+  bracketRef.on('value', snapshot => {
+    console.log('VALUE = ', snapshot.val());
     dispatch({
-      type: reducerTypes.WATCH_BRACKET,
-      payload: { [snapshot.key]: snapshot.val(), id: snapshot.ref.parent.key }
+      type: reducerTypes.GET_BRACKET,
+      payload: { ...snapshot.val(), id: snapshot.key }
     });
   });
 };
@@ -20,7 +20,7 @@ const initialState = null;
 
 export const reducer = (state = initialState, action: Object) => {
   switch (action.type) {
-    case reducerTypes.WATCH_BRACKET:
+    case reducerTypes.GET_BRACKET:
       return { ...state, ...action.payload };
     default:
       return state;

@@ -3,11 +3,11 @@
 import * as reducerTypes from 'constants/reducerTypes';
 import { db } from 'firebaze';
 
-export const createBracket = ({ authUser, seeds }) => dispatch => {
+export const createBracket = (authUser: Object, payload: Object) => (dispatch: Function) => {
   dispatch(createBracketRequest());
 
   return db
-    .doCreateBracket(authUser.uid, seeds)
+    .doCreateBracket(authUser.uid, payload)
     .then(response => {
       dispatch(createBracketComplete(response.key));
     })

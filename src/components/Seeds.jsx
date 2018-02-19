@@ -112,9 +112,15 @@ class Seeds extends React.Component {
   }
 
   onSubmit = () => {
-    const { authUser, seeds } = this.props;
+    const { authUser, seeds, bracketName, bracketSize } = this.props;
 
-    this.props.createBracket({ authUser, seeds });
+    this.props.createBracket(authUser, {
+      seeds,
+      created: Date.now(),
+      name: bracketName,
+      size: bracketSize,
+      status: 'IN_PROGRESS'
+    });
     this.props.next();
   };
 
@@ -186,7 +192,8 @@ export default connect(
   state => ({
     seeds: state.seeds,
     authUser: state.auth.authUser,
-    bracketSize: getFormValues('configure')(state).bracketSize
+    bracketSize: getFormValues('configure')(state).bracketSize,
+    bracketName: getFormValues('configure')(state).bracketName
   }),
   {
     addSeed,

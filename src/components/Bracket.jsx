@@ -4,13 +4,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Header } from 'semantic-ui-react';
 
-import { watchBracket } from 'state/bracket';
+import { getBracket } from 'state/bracket';
 
-class Bracket extends React.Component<{ authUser: Object | null, brackets: Array<Object> }> {
+class Bracket extends React.Component<{
+  authUser: Object | null,
+  bracket: Object,
+  getBracket: Function,
+  match: Object
+}> {
   componentWillReceiveProps(nextProps) {
-    const { id } = this.props.match.params;
+    const { match: { params: { id } } } = this.props;
 
-    nextProps.authUser && !this.props.authUser && this.props.watchBracket(nextProps.authUser, id);
+    nextProps.authUser && !this.props.authUser && this.props.getBracket(nextProps.authUser, id);
+  }
+
+  componentDidMount() {
+    const { authUser, match: { params: { id } } } = this.props;
+
+    authUser && this.props.getBracket(authUser, id);
   }
 
   render() {
@@ -18,12 +29,13 @@ class Bracket extends React.Component<{ authUser: Object | null, brackets: Array
 
     return (
       <Container>
-        <Header as="h1">Bracket Title</Header>
         {bracket && (
           <div>
+            <Header as="h1">{bracket.name}</Header>
             <Header as="h3">
               <u>{bracket.id}</u>
             </Header>
+            <p>{`Created At: ${bracket.created}`}</p>
             <ul>{bracket.seeds.map(s => <li key={s.title_en}>{s.title_en}</li>)}</ul>
             <br />
           </div>
@@ -38,5 +50,5 @@ export default connect(
     authUser: state.auth.authUser,
     bracket: state.bracket
   }),
-  { watchBracket }
+  { getBracket }
 )(Bracket);
