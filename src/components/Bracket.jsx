@@ -10,8 +10,15 @@ import Round from 'components/Round';
 import { getBracket } from 'state/bracket';
 import { bracketify } from 'utils/helpers';
 
+const BracketContainer = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Split = styled.section`
-  color: blue;
+  display: flex;
+  width: 42%;
 `;
 
 class Bracket extends React.Component<{
@@ -39,41 +46,39 @@ class Bracket extends React.Component<{
       const { complete, name, round, seeds } = bracket;
       const numberOfRounds = Math.floor(Math.log2(seeds.length));
       const [left, champion, right] = bracketify(bracket);
-
+      console.log([left, champion, right]);
       return (
-        <Container>
-          {bracket && (
-            <div>
-              <Header as="h1">{name}</Header>
-              <Split split={1}>
-                {left.map((e, i) => (
-                  <Round key={`split-1-round-${i}`} elements={e} current={round === i + 1} round={i + 1} />
-                ))}
-              </Split>
+        bracket && (
+          <BracketContainer>
+            {/* <Header as="h1">{name}</Header> */}
+            <Split split={1}>
+              {left.map((e, i) => (
+                <Round key={`split-1-round-${i}`} elements={e} current={round === i + 1} round={i + 1} />
+              ))}
+            </Split>
 
-              {champion.map((e, i) => (
-                <Final
-                  key={`champion-${i}`}
-                  champion={e}
-                  complete={complete}
-                  round={round}
-                  current={round === numberOfRounds && !complete}
+            {champion.map((e, i) => (
+              <Final
+                key={`champion-${i}`}
+                champion={e}
+                complete={complete}
+                round={round}
+                current={round === numberOfRounds && !complete}
+              />
+            ))}
+
+            <Split split={2}>
+              {right.map((e, i) => (
+                <Round
+                  key={`split-2-round-${i}`}
+                  elements={e}
+                  current={round === numberOfRounds - i - 1}
+                  round={numberOfRounds - 1 - i}
                 />
               ))}
-
-              <Split split={2}>
-                {right.map((e, i) => (
-                  <Round
-                    key={`split-2-round-${i}`}
-                    elements={e}
-                    current={round === numberOfRounds - i - 1}
-                    round={numberOfRounds - 1 - i}
-                  />
-                ))}
-              </Split>
-            </div>
-          )}
-        </Container>
+            </Split>
+          </BracketContainer>
+        )
       );
     }
 

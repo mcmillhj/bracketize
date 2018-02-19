@@ -1,24 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import cx from 'classnames';
-// import { numify } from 'utils/helpers';
+import styled from 'styled-components';
 
 import Pair from 'components/Pair';
 
-const Round = ({ current, elements, isFinalRound, round }) => {
-  const className = cx('round', {
-    [`round-${round}`]: round,
-    current
-  });
+const RoundContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  position: relative;
+`;
 
-  return (
-    <div className={className}>
-      {!isFinalRound ? <div className="round-details">{`Round ${round}`}</div> : null}
-      {elements.map((e, i) => <Pair key={`pair-${i}`} elements={e} currentRound={round} />)}
-    </div>
-  );
-};
+const RoundDetails = styled.section`
+  position: absolute;
+  top: 0;
+  text-transform: uppercase;
+  text-align: center;
+  align-self: center;
+`;
+
+const Round = ({ current, elements, isFinalRound, round }) => (
+  <RoundContainer>
+    {!isFinalRound ? <RoundDetails>{`Round ${round}`}</RoundDetails> : null}
+    {elements.map((e, i) => <Pair key={`pair-${i}`} elements={e} currentRound={round} />)}
+  </RoundContainer>
+);
 
 Round.propTypes = {
   isFinalRound: PropTypes.bool.isRequired,

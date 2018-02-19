@@ -1,21 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { List } from 'semantic-ui-react';
 
 import Seed from 'components/Seed';
 
-const Pair = ({ currentRound, elements }) => {
-  const directions = ['top', 'bottom'];
-
-  return (
-    <ul className="pair">
-      {elements.map((e, i) => (
-        <li className={`seed seed-${directions[i % directions.length]}`} key={`seed-${i}`}>
-          <Seed currentRound={currentRound} e={e} />
-        </li>
-      ))}
-    </ul>
-  );
-};
+const Pair = ({ currentRound, elements }) => (
+  <List>
+    {elements.map((e, i) => (
+      <List.Item key={`seed-${i}`}>
+        <Seed currentRound={currentRound} e={e} />
+      </List.Item>
+    ))}
+  </List>
+);
 
 Pair.propTypes = {
   currentRound: PropTypes.number.isRequired,

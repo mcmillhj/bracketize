@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import Round from 'components/Round';
 import Winner from 'components/Winner';
+
+const FinalContainer = styled.section`
+  width: 10%;
+`;
 
 const Final = ({ complete, current, champion, round }) => {
   let winner;
@@ -12,10 +17,10 @@ const Final = ({ complete, current, champion, round }) => {
   }
 
   return (
-    <div className="final">
+    <FinalContainer>
       {winner ? <Winner winner={winner} /> : null}
       <Round key="final-round" elements={champion} round={round} current={current} isFinalRound />
-    </div>
+    </FinalContainer>
   );
 };
 

@@ -1,10 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Image } from 'semantic-ui-react';
+import styled from 'styled-components';
+
+const WinnerContainer = styled.section`
+  position: relative;
+`;
+
+const WinnerImage = styled(Image)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+`;
 
 const Winner = ({ winner }) => (
-  <div className="winner">
-    <img className="img" src={winner.image} alt={winner.alt} />
-  </div>
+  <WinnerContainer className="winner">
+    <WinnerImage className="img" src={winner.image} alt={winner.alt} />
+  </WinnerContainer>
 );
 
 Winner.propTypes = {

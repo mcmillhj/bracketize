@@ -7,7 +7,6 @@ export const getBracket = (authUser: Object, bracketId: number) => (dispatch: Fu
   const bracketRef = db.subscribeBracket(authUser.uid, bracketId);
 
   bracketRef.on('value', snapshot => {
-    console.log('VALUE = ', snapshot.val());
     dispatch({
       type: reducerTypes.GET_BRACKET,
       payload: { ...snapshot.val(), id: snapshot.key }
