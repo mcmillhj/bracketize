@@ -1,6 +1,13 @@
 {
   "rules": {
-    ".read": "true",
-    ".write": "auth != null"
+    ".write": "auth !== null",
+    "users": {
+			"$uid": {
+      	"brackets": {
+          ".read": true,
+          ".write": "auth !== null && auth.uid === $uid"
+        }
+      }
+    }
   }
 }
