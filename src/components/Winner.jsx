@@ -23,7 +23,7 @@ const Rays = styled.div`
   width: 500px;
   height: 500px;
 
-  animation: ${spin} 10s linear infinite;
+  animation: ${spin} 15s linear infinite;
 `;
 
 class Winner extends React.Component<{ winner: Object }, { open: boolean }> {

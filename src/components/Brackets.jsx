@@ -21,6 +21,14 @@ const BracketCard = styled(Card)`
   }
 `;
 
+const BracketCardImage = styled(Image)`
+  &&& {
+    position: absolute;
+    top: ${10 / 16}rem;
+    right: ${10 / 16}rem;
+  }
+`;
+
 class Brackets extends React.Component<{
   authUser: Object | null,
   brackets: Array<Object>,
@@ -55,12 +63,13 @@ class Brackets extends React.Component<{
           brackets.map(b => (
             <BracketCard key={b.id}>
               <Card.Content>
-                <Image floated="right" size="mini" src={b.seeds[0].image} />
+                <BracketCardImage size="tiny" src={b.seeds[0].image} />
                 <Card.Header as="h4">{b.name}</Card.Header>
                 <Card.Meta>{new Date(b.created).toUTCString()}</Card.Meta>
                 <Card.Description>
                   <List>
                     <List.Item>{`Number of seeds: ${b.size}`}</List.Item>
+                    <List.Item>{`Round: ${b.round}`}</List.Item>
                     <List.Item>{`Complete: ${b.complete}`}</List.Item>
                   </List>
                 </Card.Description>
