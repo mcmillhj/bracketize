@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image } from 'semantic-ui-react';
+import { Image, Modal } from 'semantic-ui-react';
 import styled from 'styled-components';
+import Confetti from 'react-confetti';
 
 const WinnerContainer = styled.section`
-  position: relative;
-  border: 1px solid red;
+  position: absolute;
 `;
 
 const WinnerImage = styled(Image)`
@@ -15,11 +15,14 @@ const WinnerImage = styled(Image)`
 `;
 
 const Winner = ({ winner }) => {
-  console.log('WINNER = ', winner);
   return (
-    <WinnerContainer className="winner">
-      <WinnerImage className="img" src={winner.image} alt={winner.alt} />
-    </WinnerContainer>
+    <Modal basic defaultOpen>
+      <Modal.Header>{winner.title}</Modal.Header>
+      <Modal.Content image>
+        <Image size="medium" src={winner.image} alt={winner.alt} />
+        <Modal.Description>{winner.synopsis}</Modal.Description>
+      </Modal.Content>
+    </Modal>
   );
 };
 
