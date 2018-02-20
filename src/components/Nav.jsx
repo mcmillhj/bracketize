@@ -4,8 +4,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Icon, Menu } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import { auth } from 'firebaze';
+
+const SquareMenu = styled(Menu)`
+  &&& {
+    border-radius: 0;
+  }
+`;
 
 class Nav extends Component<{ authUser: Object | null }, { activeItem: string }> {
   state = {
@@ -19,7 +26,7 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
     const { authUser } = this.props;
 
     return (
-      <Menu inverted size="large">
+      <SquareMenu size="large" inverted>
         <Menu.Item as={Link} to="/">
           <Icon name="code" size="large" />
         </Menu.Item>
@@ -79,7 +86,7 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
             </Menu.Item>
           )}
         </Menu.Menu>
-      </Menu>
+      </SquareMenu>
     );
   }
 }
