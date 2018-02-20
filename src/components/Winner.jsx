@@ -20,15 +20,15 @@ const Rays = styled.div`
   position: absolute;
   top: -100px;
   left: -100px;
-  width: 490px;
-  height: 490px;
+  width: 500px;
+  height: 500px;
 
   animation: ${spin} 10s linear infinite;
 `;
 
 const Winner = ({ winner }: { winner: Object }) => {
   return (
-    <Modal basic defaultOpen>
+    <Modal basic open>
       <Rays />
       <Modal.Header>{winner.title}</Modal.Header>
       <Modal.Content image>
