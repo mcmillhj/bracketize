@@ -128,6 +128,7 @@ class Seeds extends React.Component {
       complete: false,
       round: 1
     });
+
     this.props.next();
   };
 

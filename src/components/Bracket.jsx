@@ -15,6 +15,13 @@ const BracketContainer = styled.section`
   flex-wrap: wrap;
 `;
 
+const PageContainer = styled(Container)`
+  &&& {
+    width: 100%;
+    padding: ${10 / 16}rem;
+  }
+`;
+
 class Bracket extends React.Component<{
   authUser: Object | null,
   bracket: Object,
@@ -43,7 +50,7 @@ class Bracket extends React.Component<{
 
       return (
         bracket && (
-          <section>
+          <PageContainer>
             <Header as="h1">{name}</Header>
             <BracketContainer>
               {rounds.map((e, i) => (
@@ -57,7 +64,7 @@ class Bracket extends React.Component<{
                 />
               ))}
             </BracketContainer>
-          </section>
+          </PageContainer>
         )
       );
     }

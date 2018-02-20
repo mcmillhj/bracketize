@@ -17,7 +17,7 @@ export const getBracket = (authUser: Object, bracketId: number) => (dispatch: Fu
 // reducer
 const initialState = null;
 
-export const reducer = (state = initialState, action: Object) => {
+export const reducer = (state: Object | null = initialState, action: Object) => {
   switch (action.type) {
     case reducerTypes.GET_BRACKET:
       return { ...state, ...action.payload };

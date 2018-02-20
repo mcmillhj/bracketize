@@ -24,7 +24,7 @@ const RoundDetails = styled.section`
 
 const Round = ({ current, complete, elements, isFinalRound, round }) => {
   let winner;
-  if (complete) {
+  if (complete && isFinalRound) {
     const [A, B] = elements[0];
     winner = A.votes[round - 1] >= B.votes[round - 1] ? A : B;
   }
