@@ -4,18 +4,18 @@ import { List } from 'semantic-ui-react';
 
 import Seed from 'components/Seed';
 
-const Pair = ({ current, currentRound, elements }) => (
+const Pair = ({ currentRound, elements: [A, B] }) => (
   <List>
-    {elements.map((e, i) => (
-      <List.Item key={`seed-${i}`}>
-        <Seed current={current} currentRound={currentRound} e={e} />
-      </List.Item>
-    ))}
+    <List.Item key={'seed-1'}>
+      <Seed currentRound={currentRound} e={A} winner={A.votes[currentRound - 1] >= B.votes[currentRound - 1]} />
+    </List.Item>
+    <List.Item key={'seed-2'}>
+      <Seed currentRound={currentRound} e={B} winner={A.votes[currentRound - 1] < B.votes[currentRound - 1]} />
+    </List.Item>
   </List>
 );
 
 Pair.propTypes = {
-  current: PropTypes.bool.isRequired,
   currentRound: PropTypes.number.isRequired,
   elements: PropTypes.arrayOf(
     PropTypes.shape({

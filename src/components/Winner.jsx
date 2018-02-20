@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Modal } from 'semantic-ui-react';
+import { Button, Image, Modal } from 'semantic-ui-react';
 import styled, { keyframes } from 'styled-components';
 
 const spin = keyframes`
@@ -26,18 +26,31 @@ const Rays = styled.div`
   animation: ${spin} 10s linear infinite;
 `;
 
-const Winner = ({ winner }: { winner: Object }) => {
-  return (
-    <Modal basic open>
-      <Rays />
-      <Modal.Header>{winner.title}</Modal.Header>
-      <Modal.Content image>
-        <Image size="big" src={winner.image} alt={winner.alt} />
-        <Modal.Description>{winner.synopsis}</Modal.Description>
-      </Modal.Content>
-    </Modal>
-  );
-};
+class Winner extends React.Component<{ winner: Object }, { open: boolean }> {
+  state = {
+    open: true
+  };
+
+  render() {
+    const { winner } = this.props;
+
+    return (
+      <Modal
+        trigger={<Button onClick={() => this.setState({ open: true })}>View Winner</Button>}
+        onClose={() => this.setState({ open: false })}
+        open={this.state.open}
+        basic
+        closeIcon>
+        <Rays />
+        <Modal.Header>{winner.title}</Modal.Header>
+        <Modal.Content image>
+          <Image size="big" src={winner.image} alt={winner.alt} />
+          <Modal.Description>{winner.synopsis}</Modal.Description>
+        </Modal.Content>
+      </Modal>
+    );
+  }
+}
 
 Winner.propTypes = {
   winner: PropTypes.shape({
@@ -47,7 +60,5 @@ Winner.propTypes = {
     votes: PropTypes.arrayOf(PropTypes.number.isRequired)
   }).isRequired
 };
-
-Winner.defaultProps = {};
 
 export default Winner;

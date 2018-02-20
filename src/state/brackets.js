@@ -21,6 +21,13 @@ export const getBrackets = (authUser: Object) => (dispatch: Function) => {
   });
 };
 
+export const deleteBracket = (authUser: Object, bracketId: number) => (dispatch: Function) => {
+  return db
+    .doDeleteBracket(authUser.uid, bracketId)
+    .then(() => dispatch({ type: reducerTypes.DELETE_BRACKET, payload: bracketId }))
+    .catch(error => console.error(error));
+};
+
 // reducer
 const initialState = [];
 
@@ -28,6 +35,8 @@ export const reducer = (state: Array<Object> = initialState, action: Object) => 
   switch (action.type) {
     case reducerTypes.GET_BRACKETS:
       return _.uniqBy([...state, ...action.payload], b => b.id);
+    case reducerTypes.DELETE_BRACKET:
+      return state.filter(b => b.id !== action.payload);
     default:
       return state;
   }

@@ -7,7 +7,7 @@ const SeedContainer = styled.section`
   position: relative;
   background-color: white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  opacity: ${props => (props.current ? 1 : 0.6)};
+  opacity: ${props => (props.winner ? 1 : 0.5)};
   margin: ${3 / 16}rem 0;
   height: ${50 / 16}rem;
 
@@ -22,6 +22,7 @@ const SeedImage = styled(Image)`
   bottom: 0;
   width: ${32 / 16}rem;
   height: 100%;
+  background: grey;
 `;
 
 const SeedName = styled.section`
@@ -65,8 +66,8 @@ const Votes = styled.span`
   font-family: 'Roboto Condensed', sans-serif;
 `;
 
-const Seed = ({ e, current, currentRound }) => (
-  <SeedContainer current={current}>
+const Seed = ({ e, currentRound, winner }) => (
+  <SeedContainer winner={winner}>
     <SeedImage src={e.image} alt={e.alt} />
     <SeedNumber>{e.seed}</SeedNumber>
     <SeedName>{e.title}</SeedName>
@@ -76,6 +77,7 @@ const Seed = ({ e, current, currentRound }) => (
 
 Seed.propTypes = {
   currentRound: PropTypes.number.isRequired,
+  winner: PropTypes.bool.isRequired,
   e: PropTypes.shape({
     seed: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
