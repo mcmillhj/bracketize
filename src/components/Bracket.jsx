@@ -29,21 +29,27 @@ class Bracket extends React.Component<{
   match: Object
 }> {
   componentWillReceiveProps(nextProps) {
-    const { match: { params: { id, user_id } } } = this.props;
+    const { match: { params: { id, user_id } }, bracket } = this.props;
 
-    if (nextProps.authUser && !this.props.authUser) {
+    // handle authed route
+    if (nextProps.authUser && !this.props.authUser && !bracket) {
       this.props.getBracket(nextProps.authUser, id);
     }
 
-    if (user_id && !nextProps.authUser) {
+    // handle public route
+    if (user_id && !nextProps.authUser && !this.props.authUser && !bracket) {
       this.props.getBracket({ uid: user_id }, id);
     }
   }
 
   componentDidMount() {
-    const { authUser, match: { params: { id } } } = this.props;
+    const { authUser, match: { params: { id, user_id } }, bracket } = this.props;
 
-    authUser && this.props.getBracket(authUser, id);
+    // handle authed route
+    authUser && !bracket && this.props.getBracket(authUser, id);
+
+    // handle public route
+    !authUser && !bracket && user_id && this.props.getBracket({ uid: user_id }, id);
   }
 
   render() {
