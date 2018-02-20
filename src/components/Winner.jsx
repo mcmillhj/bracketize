@@ -28,7 +28,7 @@ const Rays = styled.div`
 
 const Winner = ({ winner }: { winner: Object }) => {
   return (
-    <Modal basic defaultOpen style={{ position: 'relative' }}>
+    <Modal basic defaultOpen>
       <Rays />
       <Modal.Header>{winner.title}</Modal.Header>
       <Modal.Content image>
