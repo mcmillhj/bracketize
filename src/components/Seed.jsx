@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Image } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-const SeedItem = styled.section`
+const SeedContainer = styled.section`
   position: relative;
   background-color: white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  opacity: 0.45;
-  margin: 0.1875rem 0;
-  height: 2.75rem;
+  opacity: ${props => (props.current ? 1 : 0.45)};
+  margin: ${3 / 16}rem 0;
+  height: ${50 / 16}rem;
 
   display: flex;
   justify-content: center;
@@ -41,10 +41,12 @@ const SeedNumber = styled.span`
   height: ${12 / 16}rem;
   color: white;
   font-weight: bold;
+  background: grey;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Votes = styled.span`
@@ -53,22 +55,25 @@ const Votes = styled.span`
   bottom: 0;
   width: ${28 / 16}rem;
   height: 100%;
+  background: grey;
   color: white;
   font-weight: bold;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Roboto Condensed', sans-serif;
 `;
 
-const Seed = ({ e, currentRound }) => {
+const Seed = ({ e, current, currentRound }) => {
+  console.log('E = ', e);
   return (
-    <SeedItem>
+    <SeedContainer current={current}>
       <SeedImage src={e.image} alt={e.alt} />
       <SeedNumber>{e.seed}</SeedNumber>
       <SeedName>{e.title}</SeedName>
       <Votes>{e.votes[currentRound - 1]}</Votes>
-    </SeedItem>
+    </SeedContainer>
   );
 };
 

@@ -6,7 +6,10 @@ import Round from 'components/Round';
 import Winner from 'components/Winner';
 
 const FinalContainer = styled.section`
-  width: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-basis: 32%;
 `;
 
 const Final = ({ complete, current, champion, round }) => {
@@ -19,7 +22,7 @@ const Final = ({ complete, current, champion, round }) => {
   return (
     <FinalContainer>
       {winner ? <Winner winner={winner} /> : null}
-      <Round key="final-round" elements={champion} round={round} current={current} isFinalRound />
+      <Round elements={champion} round={round} current={current} isFinalRound />
     </FinalContainer>
   );
 };

@@ -12,13 +12,8 @@ import { bracketify } from 'utils/helpers';
 
 const BracketContainer = styled.section`
   display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Split = styled.section`
-  display: flex;
-  width: 42%;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 class Bracket extends React.Component<{
@@ -45,19 +40,16 @@ class Bracket extends React.Component<{
     if (bracket) {
       const { complete, name, round, seeds } = bracket;
       const numberOfRounds = Math.floor(Math.log2(seeds.length));
-      const [left, champion, right] = bracketify(bracket);
-      console.log([left, champion, right]);
+      const [rounds, final] = bracketify(bracket);
+      console.log('ROUNDS = ', rounds);
+      console.log('FINAL = ', final);
       return (
         bracket && (
           <BracketContainer>
             {/* <Header as="h1">{name}</Header> */}
-            <Split split={1}>
-              {left.map((e, i) => (
-                <Round key={`split-1-round-${i}`} elements={e} current={round === i + 1} round={i + 1} />
-              ))}
-            </Split>
+            {rounds.map((e, i) => <Round key={`round-${i}`} elements={e} current={round === i + 1} round={i + 1} />)}
 
-            {champion.map((e, i) => (
+            {final.map((e, i) => (
               <Final
                 key={`champion-${i}`}
                 champion={e}
@@ -66,17 +58,6 @@ class Bracket extends React.Component<{
                 current={round === numberOfRounds && !complete}
               />
             ))}
-
-            <Split split={2}>
-              {right.map((e, i) => (
-                <Round
-                  key={`split-2-round-${i}`}
-                  elements={e}
-                  current={round === numberOfRounds - i - 1}
-                  round={numberOfRounds - 1 - i}
-                />
-              ))}
-            </Split>
           </BracketContainer>
         )
       );

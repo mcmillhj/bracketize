@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const WinnerContainer = styled.section`
   position: relative;
+  border: 1px solid red;
 `;
 
 const WinnerImage = styled(Image)`
@@ -13,15 +14,17 @@ const WinnerImage = styled(Image)`
   left: 0;
 `;
 
-const Winner = ({ winner }) => (
-  <WinnerContainer className="winner">
-    <WinnerImage className="img" src={winner.image} alt={winner.alt} />
-  </WinnerContainer>
-);
+const Winner = ({ winner }) => {
+  console.log('WINNER = ', winner);
+  return (
+    <WinnerContainer className="winner">
+      <WinnerImage className="img" src={winner.image} alt={winner.alt} />
+    </WinnerContainer>
+  );
+};
 
 Winner.propTypes = {
   winner: PropTypes.shape({
-    id: PropTypes.string.isRequired,
     seed: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,

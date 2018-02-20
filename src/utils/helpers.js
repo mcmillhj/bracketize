@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import _ from 'lodash';
 
 const createDummySeed = numberOfRounds => ({
   id: '-1',
@@ -19,66 +20,26 @@ export const bracketify = bracket => {
     seedsByRound.push(newSeeds);
   }
 
-  let seeds = seedsByRound[0];
-  for (let i = 1; i < seedsByRound.length; i += 1) {
-    const innerSeeds = seedsByRound[i];
-    const middle = seeds.length / 2;
+  console.log('SEEDS BY ROUND = ', seedsByRound);
 
-    seeds = R.flatten(R.insertAll(middle, innerSeeds, seeds));
-  }
+  let seeds = R.flatten(seedsByRound);
 
   if (seeds.length < bracketSize) {
-    const middle = seeds.length / 2;
-
-    seeds = R.flatten(
-      R.insertAll(middle, new Array(bracketSize - seeds.length).fill(createDummySeed(numberOfRounds)), seeds)
-    );
+    seeds = R.flatten(R.append(new Array(bracketSize - seeds.length).fill(createDummySeed(numberOfRounds)), seeds));
   }
 
-  return splitify(pairify(seeds), Math.floor(elements.length / 2));
+  return roundify(pairify(seeds), Math.floor(elements.length / 2));
 };
 
 const pairify = seeds => R.splitEvery(2, seeds);
 
-const splitify = (pairs, middle) => {
-  const left = [];
-  const right = [];
-  const final = [pairs.splice(middle - 1, 1)];
+const roundify = (pairs, middle) => {
+  const rounds = [];
+  const final = [pairs.splice(pairs.length - 1)];
 
-  for (let i = middle / 2; i >= 1; i /= 2) {
-    left.push(pairs.splice(0, i));
+  for (let i = middle; i > 1; i /= 2) {
+    rounds.push(pairs.splice(0, i));
   }
 
-  for (let i = 1; i <= middle / 2; i *= 2) {
-    right.push(pairs.splice(0, i));
-  }
-
-  return [left, final, right];
+  return [rounds, final];
 };
-
-// export const numify = (classname, n) => {
-//   const numberToWordsMap = [
-//     'zero',
-//     'one',
-//     'two',
-//     'three',
-//     'four',
-//     'five',
-//     'six',
-//     'seven',
-//     'eight',
-//     'nine',
-//     'ten',
-//     'eleven',
-//     'twelve',
-//     'thirteen',
-//     'fourteen',
-//     'fifteen'
-//   ];
-
-//   if (!n) {
-//     return '';
-//   }
-
-//   return `${classname}-${numberToWordsMap[n]}`;
-// };

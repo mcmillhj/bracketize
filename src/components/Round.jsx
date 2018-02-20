@@ -8,7 +8,7 @@ const RoundContainer = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 100%;
+  flex-basis: 32%;
   position: relative;
 `;
 
@@ -16,6 +16,7 @@ const RoundDetails = styled.section`
   position: absolute;
   top: 0;
   text-transform: uppercase;
+  font-family: 'Roboto Condensed', sans-serif;
   text-align: center;
   align-self: center;
 `;
@@ -23,7 +24,7 @@ const RoundDetails = styled.section`
 const Round = ({ current, elements, isFinalRound, round }) => (
   <RoundContainer>
     {!isFinalRound ? <RoundDetails>{`Round ${round}`}</RoundDetails> : null}
-    {elements.map((e, i) => <Pair key={`pair-${i}`} elements={e} currentRound={round} />)}
+    {elements.map((e, i) => <Pair key={`pair-${i}`} elements={e} current={current} currentRound={round} />)}
   </RoundContainer>
 );
 
