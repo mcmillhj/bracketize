@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Pair from 'components/Pair';
+import Winner from 'components/Winner';
 
 const RoundContainer = styled.section`
   display: flex;
@@ -21,12 +22,21 @@ const RoundDetails = styled.section`
   align-self: center;
 `;
 
-const Round = ({ current, elements, isFinalRound, round }) => (
-  <RoundContainer>
-    {!isFinalRound ? <RoundDetails>{`Round ${round}`}</RoundDetails> : null}
-    {elements.map((e, i) => <Pair key={`pair-${i}`} elements={e} current={current} currentRound={round} />)}
-  </RoundContainer>
-);
+const Round = ({ current, complete, elements, isFinalRound, round }) => {
+  let winner;
+  if (complete) {
+    const [A, B] = elements[0];
+    winner = A.votes[round - 1] >= B.votes[round - 1] ? A : B;
+  }
+
+  return (
+    <RoundContainer>
+      {winner ? <Winner winner={winner} /> : null}
+      <RoundDetails>{isFinalRound ? 'Final' : `Round ${round}`}</RoundDetails>
+      {elements.map((e, i) => <Pair key={`pair-${i}`} elements={e} current={current} currentRound={round} />)}
+    </RoundContainer>
+  );
+};
 
 Round.propTypes = {
   isFinalRound: PropTypes.bool.isRequired,

@@ -7,7 +7,7 @@ const SeedContainer = styled.section`
   position: relative;
   background-color: white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  opacity: ${props => (props.current ? 1 : 0.45)};
+  opacity: ${props => (props.current ? 1 : 0.6)};
   margin: ${3 / 16}rem 0;
   height: ${50 / 16}rem;
 
@@ -65,17 +65,14 @@ const Votes = styled.span`
   font-family: 'Roboto Condensed', sans-serif;
 `;
 
-const Seed = ({ e, current, currentRound }) => {
-  console.log('E = ', e);
-  return (
-    <SeedContainer current={current}>
-      <SeedImage src={e.image} alt={e.alt} />
-      <SeedNumber>{e.seed}</SeedNumber>
-      <SeedName>{e.title}</SeedName>
-      <Votes>{e.votes[currentRound - 1]}</Votes>
-    </SeedContainer>
-  );
-};
+const Seed = ({ e, current, currentRound }) => (
+  <SeedContainer current={current}>
+    <SeedImage src={e.image} alt={e.alt} />
+    <SeedNumber>{e.seed}</SeedNumber>
+    <SeedName>{e.title}</SeedName>
+    <Votes>{e.votes[currentRound - 1]}</Votes>
+  </SeedContainer>
+);
 
 Seed.propTypes = {
   currentRound: PropTypes.number.isRequired,

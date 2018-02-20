@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Container, Header } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import Final from 'components/Final';
 import Round from 'components/Round';
 import { getBracket } from 'state/bracket';
 import { bracketify } from 'utils/helpers';
@@ -40,25 +39,25 @@ class Bracket extends React.Component<{
     if (bracket) {
       const { complete, name, round, seeds } = bracket;
       const numberOfRounds = Math.floor(Math.log2(seeds.length));
-      const [rounds, final] = bracketify(bracket);
-      console.log('ROUNDS = ', rounds);
-      console.log('FINAL = ', final);
+      const [rounds] = bracketify(bracket);
+
       return (
         bracket && (
-          <BracketContainer>
-            {/* <Header as="h1">{name}</Header> */}
-            {rounds.map((e, i) => <Round key={`round-${i}`} elements={e} current={round === i + 1} round={i + 1} />)}
-
-            {final.map((e, i) => (
-              <Final
-                key={`champion-${i}`}
-                champion={e}
-                complete={complete}
-                round={round}
-                current={round === numberOfRounds && !complete}
-              />
-            ))}
-          </BracketContainer>
+          <section>
+            <Header as="h1">{name}</Header>
+            <BracketContainer>
+              {rounds.map((e, i) => (
+                <Round
+                  key={`round-${i}`}
+                  elements={e}
+                  complete={complete}
+                  current={round === i + 1 && !complete}
+                  round={i + 1}
+                  isFinalRound={i + 1 === numberOfRounds}
+                />
+              ))}
+            </BracketContainer>
+          </section>
         )
       );
     }
