@@ -1,9 +1,13 @@
 {
   "rules": {
     ".write": "auth !== null",
+    "brackets": {
+      ".read": true,
+      ".write": false
+    },
     "users": {
-			"$uid": {
-      	"brackets": {
+      "$uid": {
+        "brackets": {
           ".read": true,
           ".write": "auth !== null && auth.uid === $uid"
         }
