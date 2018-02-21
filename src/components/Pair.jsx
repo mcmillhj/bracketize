@@ -4,19 +4,36 @@ import { List } from 'semantic-ui-react';
 
 import Seed from 'components/Seed';
 
-const Pair = ({ currentRound, elements: [A, B] }) => (
-  <List>
-    <List.Item key={'seed-1'}>
-      <Seed currentRound={currentRound} e={A} winner={A.votes[currentRound - 1] >= B.votes[currentRound - 1]} />
-    </List.Item>
-    <List.Item key={'seed-2'}>
-      <Seed currentRound={currentRound} e={B} winner={A.votes[currentRound - 1] < B.votes[currentRound - 1]} />
-    </List.Item>
-  </List>
-);
+const Pair = ({ round, currentRound, isFinalRound, elements: [A, B] }) => {
+  // console.log('ROUND = ', round);
+  // console.log('currentRound = ', currentRound);
+  // console.log('isFinalRound = ', isFinalRound);
 
+  // console.log('A = ', A);
+  // console.log('B = ', B);
+  return (
+    <List>
+      <List.Item key={'seed-1'}>
+        <Seed
+          round={round}
+          e={A}
+          winner={(round >= currentRound && !isFinalRound) || A.votes[round - 1] >= B.votes[round - 1]}
+        />
+      </List.Item>
+      <List.Item key={'seed-2'}>
+        <Seed
+          round={round}
+          e={B}
+          winner={(round >= currentRound && !isFinalRound) || A.votes[round - 1] < B.votes[round - 1]}
+        />
+      </List.Item>
+    </List>
+  );
+};
 Pair.propTypes = {
+  isFinalRound: PropTypes.bool.isRequired,
   currentRound: PropTypes.number.isRequired,
+  round: PropTypes.number.isRequired,
   elements: PropTypes.arrayOf(
     PropTypes.shape({
       seed: PropTypes.number.isRequired,

@@ -26,37 +26,19 @@ const PageContainer = styled(Container)`
 class Bracket extends React.Component<{
   authUser: Object | null,
   bracket: Object,
-  getBracket: Function,
-  match: Object
+  bracketId: number,
+  getBracket: Function
 }> {
-  componentWillReceiveProps(nextProps) {
-    const { match: { params: { id, user_id } } } = this.props;
-
-    // handle authed route
-    if (nextProps.authUser && !this.props.authUser) {
-      this.props.getBracket(nextProps.authUser, id);
-    }
-
-    // handle public route
-    if (user_id && !nextProps.authUser && !this.props.authUser) {
-      this.props.getBracket({ uid: user_id }, id);
-    }
-  }
-
   componentDidMount() {
-    const { authUser, match: { params: { id, user_id } } } = this.props;
+    const { bracketId } = this.props;
 
-    // handle authed route
-    authUser && this.props.getBracket(authUser, id);
-
-    // handle public route
-    !authUser && user_id && this.props.getBracket({ uid: user_id }, id);
+    bracketId && this.props.getBracket(bracketId);
   }
 
   render() {
-    const { bracket } = this.props;
+    const { bracket: { isLoading, bracket } } = this.props;
 
-    if (bracket) {
+    if (bracket && !isLoading) {
       const { complete, name, round, seeds } = bracket;
       const numberOfRounds = Math.floor(Math.log2(seeds.length));
       const [rounds] = bracketify(bracket);
@@ -68,24 +50,23 @@ class Bracket extends React.Component<{
       }
 
       return (
-        bracket && (
-          <PageContainer>
-            {winner ? <Winner winner={winner} /> : null}
+        <PageContainer>
+          {winner ? <Winner winner={winner} /> : null}
 
-            <Header as="h1">{name}</Header>
-            <BracketContainer>
-              {rounds.map((e, i) => (
-                <Round
-                  key={`round-${i}`}
-                  elements={e}
-                  round={i + 1}
-                  numberOfRounds={numberOfRounds}
-                  isFinalRound={i + 1 === numberOfRounds}
-                />
-              ))}
-            </BracketContainer>
-          </PageContainer>
-        )
+          <Header as="h1">{name}</Header>
+          <BracketContainer>
+            {rounds.map((e, i) => (
+              <Round
+                key={`round-${i}`}
+                elements={e}
+                round={i + 1}
+                currentRound={round}
+                numberOfRounds={numberOfRounds}
+                isFinalRound={i + 1 === numberOfRounds}
+              />
+            ))}
+          </BracketContainer>
+        </PageContainer>
       );
     }
 
@@ -94,9 +75,10 @@ class Bracket extends React.Component<{
 }
 
 export default connect(
-  state => ({
+  (state, props) => ({
     authUser: state.auth.authUser,
-    bracket: state.bracket
+    bracket: state.bracket,
+    bracketId: props.match.params.id
   }),
   { getBracket }
 )(Bracket);

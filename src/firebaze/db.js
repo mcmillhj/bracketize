@@ -1,7 +1,9 @@
 import { db } from 'firebaze/firebase';
 
-const bracketsRef = user_id => db.ref(`users/${user_id}/brackets`);
-const bracketRef = (user_id, id) => db.ref(`users/${user_id}/brackets/${id}`);
+const userBracketsRef = user_id => db.ref(`users/${user_id}/brackets`);
+const userBracketRef = (user_id, id) => db.ref(`users/${user_id}/brackets/${id}`);
+const bracketsRef = () => db.ref('brackets');
+const bracketRef = id => db.ref(`brackets/${id}`);
 const userRef = id => db.ref(`users/${id}`);
 
 export const doCreateUser = (id, username, email) =>
@@ -10,12 +12,22 @@ export const doCreateUser = (id, username, email) =>
     email
   });
 
-export const doDeleteUser = id => db.ref(`users/${id}`).remove();
+export const doDeleteUser = id => userRef(id).remove();
 
-export const doCreateBracket = (user_id, payload) => bracketsRef(user_id).push(payload);
+export const doCreateBracket = (user_id, payload) =>
+  new Promise(() => {
+    const bracketId = bracketsRef().push().key;
+    const newBracket = {};
 
-export const doDeleteBracket = (user_id, id) => bracketRef(user_id, id).remove();
+    newBracket[`brackets/${bracketId}`] = payload;
+    newBracket[`users/${user_id}/brackets/${bracketId}`] = payload;
 
-export const subscribeBrackets = user_id => bracketsRef(user_id);
+    db.ref().update(newBracket);
+  });
 
-export const subscribeBracket = (user_id, id) => bracketRef(user_id, id);
+export const doDeleteBracket = (user_id, id) =>
+  Promise.all([bracketRef(id).remove(), userBracketRef(user_id, id).remove()]);
+
+export const subscribeBrackets = user_id => userBracketsRef(user_id);
+
+export const subscribeBracket = id => bracketRef(id);

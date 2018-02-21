@@ -66,17 +66,17 @@ const Votes = styled.span`
   font-family: 'Roboto Condensed', sans-serif;
 `;
 
-const Seed = ({ e, currentRound, winner }) => (
+const Seed = ({ e, round, winner }) => (
   <SeedContainer winner={winner}>
     <SeedImage src={e.image} alt={e.alt} />
     <SeedNumber>{e.seed}</SeedNumber>
     <SeedName>{e.title}</SeedName>
-    <Votes>{e.votes[currentRound - 1]}</Votes>
+    <Votes>{e.votes[round - 1]}</Votes>
   </SeedContainer>
 );
 
 Seed.propTypes = {
-  currentRound: PropTypes.number.isRequired,
+  round: PropTypes.number.isRequired,
   winner: PropTypes.bool.isRequired,
   e: PropTypes.shape({
     seed: PropTypes.number.isRequired,

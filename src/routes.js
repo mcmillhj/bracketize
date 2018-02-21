@@ -16,8 +16,7 @@ export default () => (
       <Route exact path="/" component={Home} />
       <Route path="/account" component={Account} />
       <Route exact path="/brackets" component={Brackets} />
-      <Route exact path="/brackets/:id" component={Bracket} />
-      <Route path="/brackets/:id/:user_id" component={Bracket} />
+      <Route path="/brackets/:id" component={Bracket} />
       <Route path="/create-bracket" component={CreateBracket} />
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/signin" component={SignIn} />
