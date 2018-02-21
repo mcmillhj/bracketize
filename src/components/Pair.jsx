@@ -4,7 +4,7 @@ import { List } from 'semantic-ui-react';
 
 import Seed from 'components/Seed';
 
-const Pair = ({ round, currentRound, isFinalRound, elements: [A, B] }) => {
+const Pair = ({ round, currentRound, complete, elements: [A, B] }) => {
   // console.log('ROUND = ', round);
   // console.log('currentRound = ', currentRound);
   // console.log('isFinalRound = ', isFinalRound);
@@ -17,21 +17,21 @@ const Pair = ({ round, currentRound, isFinalRound, elements: [A, B] }) => {
         <Seed
           round={round}
           e={A}
-          winner={(round >= currentRound && !isFinalRound) || A.votes[round - 1] >= B.votes[round - 1]}
+          winner={(round >= currentRound && !complete) || A.votes[round - 1] >= B.votes[round - 1]}
         />
       </List.Item>
       <List.Item key={'seed-2'}>
         <Seed
           round={round}
           e={B}
-          winner={(round >= currentRound && !isFinalRound) || A.votes[round - 1] < B.votes[round - 1]}
+          winner={(round >= currentRound && !complete) || A.votes[round - 1] < B.votes[round - 1]}
         />
       </List.Item>
     </List>
   );
 };
 Pair.propTypes = {
-  isFinalRound: PropTypes.bool.isRequired,
+  complete: PropTypes.bool.isRequired,
   currentRound: PropTypes.number.isRequired,
   round: PropTypes.number.isRequired,
   elements: PropTypes.arrayOf(

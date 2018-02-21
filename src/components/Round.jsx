@@ -21,16 +21,17 @@ const RoundDetails = styled.section`
   align-self: center;
 `;
 
-const Round = ({ elements, isFinalRound, currentRound, round, numberOfRounds }) => (
+const Round = ({ elements, isFinalRound, currentRound, complete, round, numberOfRounds }) => (
   <RoundContainer numberOfRounds={numberOfRounds}>
     <RoundDetails>{isFinalRound ? 'Final' : `Round ${round}`}</RoundDetails>
     {elements.map((e, i) => (
-      <Pair key={`pair-${i}`} elements={e} isFinalRound={isFinalRound} currentRound={currentRound} round={round} />
+      <Pair key={`pair-${i}`} elements={e} complete={complete} currentRound={currentRound} round={round} />
     ))}
   </RoundContainer>
 );
 
 Round.propTypes = {
+  complete: PropTypes.bool.isRequired,
   isFinalRound: PropTypes.bool.isRequired,
   currentRound: PropTypes.number.isRequired,
   round: PropTypes.number.isRequired,

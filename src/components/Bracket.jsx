@@ -61,6 +61,7 @@ class Bracket extends React.Component<{
                 key={`round-${i}`}
                 elements={e}
                 round={i + 1}
+                complete={complete}
                 currentRound={round}
                 numberOfRounds={numberOfRounds}
                 isFinalRound={i + 1 === numberOfRounds}
