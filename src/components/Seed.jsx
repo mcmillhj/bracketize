@@ -22,7 +22,14 @@ const SeedImage = styled(Image)`
   bottom: 0;
   width: ${32 / 16}rem;
   height: 100%;
-  background: grey;
+`;
+
+const SeedImageContainer = styled.section`
+  position: relative;
+  width: ${32 / 16}rem;
+  height: 100%;
+  background-color: gray;
+  flex-shrink: 0;
 `;
 
 const SeedName = styled.section`
@@ -63,7 +70,7 @@ const Votes = styled.span`
 
 const Seed = ({ e, round, winner }) => (
   <SeedContainer winner={winner}>
-    <SeedImage src={e.image} alt={e.alt} />
+    <SeedImageContainer>{e.image && <SeedImage src={e.image} alt={e.alt} />}</SeedImageContainer>
     <SeedNumber>{e.seed}</SeedNumber>
     <SeedName>{e.title}</SeedName>
     <Votes>
