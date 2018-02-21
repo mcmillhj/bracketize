@@ -13,6 +13,7 @@ import { bracketify } from 'utils/helpers';
 const BracketContainer = styled.section`
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
   flex-wrap: wrap;
 `;
 

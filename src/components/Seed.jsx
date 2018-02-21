@@ -12,7 +12,7 @@ const SeedContainer = styled.section`
   height: ${50 / 16}rem;
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -28,10 +28,8 @@ const SeedImage = styled(Image)`
 const SeedName = styled.section`
   text-align: center;
   margin: 0 auto;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: ${14 / 16}rem;
 `;
 
 const SeedNumber = styled.span`
@@ -51,19 +49,16 @@ const SeedNumber = styled.span`
 `;
 
 const Votes = styled.span`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: ${28 / 16}rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  font-family: 'Roboto Condensed', sans-serif;
+  width: ${32 / 16}rem;
   height: 100%;
   background: grey;
   color: white;
   font-weight: bold;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Roboto Condensed', sans-serif;
 `;
 
 const Seed = ({ e, round, winner }) => (
@@ -71,7 +66,9 @@ const Seed = ({ e, round, winner }) => (
     <SeedImage src={e.image} alt={e.alt} />
     <SeedNumber>{e.seed}</SeedNumber>
     <SeedName>{e.title}</SeedName>
-    <Votes>{e.votes[round - 1]}</Votes>
+    <Votes>
+      <p>{e.votes[round - 1]}</p>
+    </Votes>
   </SeedContainer>
 );
 

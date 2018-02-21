@@ -24,6 +24,8 @@ const Rays = styled.div`
   height: 500px;
 
   animation: ${spin} 15s linear infinite;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 `;
 
 class Winner extends React.Component<{ winner: Object }, { open: boolean }> {
