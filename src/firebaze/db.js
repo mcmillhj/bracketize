@@ -16,13 +16,20 @@ export const doDeleteUser = id => userRef(id).remove();
 
 export const doCreateBracket = (user_id, payload) =>
   new Promise(() => {
-    const bracketId = bracketsRef().push().key;
+    const newBracketId = bracketsRef().push().key;
     const newBracket = {};
 
-    newBracket[`brackets/${bracketId}`] = payload;
-    newBracket[`users/${user_id}/brackets/${bracketId}`] = payload;
+    newBracket[`brackets/${newBracketId}`] = payload;
+    newBracket[`users/${user_id}/brackets/${newBracketId}`] = payload;
 
     db.ref().update(newBracket);
+  });
+
+export const doUpdateBracketWithVotes = (id, payload) =>
+  new Promise(() => {
+    console.log('PAYLOAD = ', payload);
+
+    bracketRef(id).update({ seeds: payload.seeds });
   });
 
 export const doDeleteBracket = (user_id, id) =>

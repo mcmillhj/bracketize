@@ -16,3 +16,5 @@ export const WATCH_BRACKET: string = 'bracket/watch_bracket';
 
 export const GET_BRACKETS: string = 'brackets/get_brackets';
 export const WATCH_BRACKETS: string = 'brackets/watch_brackets';
+
+export const VOTE_SEED: string = 'vote/vote_seed';
