@@ -21,13 +21,6 @@ export const getBrackets = (authUser: Object) => (dispatch: Function) => {
   });
 };
 
-export const deleteBracket = (authUser: Object, bracketId: number) => (dispatch: Function) => {
-  return db
-    .doDeleteBracket(authUser.uid, bracketId)
-    .then(() => dispatch({ type: reducerTypes.DELETE_BRACKET, payload: bracketId }))
-    .catch(error => console.error(error));
-};
-
 // reducer
 const initialState = [];
 

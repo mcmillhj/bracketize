@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import { Button, Card, Container, Grid, Header, Image, List } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { deleteBracket, getBrackets } from 'state/brackets';
+import { deleteBracket } from 'state/bracket';
+import { getBrackets } from 'state/brackets';
 
 const BracketButton = styled(Button)`
   &&& {
