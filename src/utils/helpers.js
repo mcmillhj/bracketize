@@ -39,5 +39,5 @@ const roundify = (pairs, middle) => {
 
   rounds.push(pairs);
 
-  return [rounds];
+  return rounds;
 };

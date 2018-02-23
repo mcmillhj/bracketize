@@ -7,7 +7,8 @@ import styled from 'styled-components';
 
 import Round from 'components/Round';
 import Winner from 'components/Winner';
-import { getBracket } from 'state/bracket';
+import { getBracket, ungetBracket } from 'state/bracket';
+import { voteSeed } from 'state/vote';
 import { bracketify } from 'utils/helpers';
 
 const BracketContainer = styled.section`
@@ -28,7 +29,9 @@ class Bracket extends React.Component<{
   authUser: Object | null,
   bracket: Object,
   bracketId: number,
-  getBracket: Function
+  getBracket: Function,
+  ungetBracket: Function,
+  voteSeed: Function
 }> {
   componentDidMount() {
     const { bracketId } = this.props;
@@ -36,13 +39,19 @@ class Bracket extends React.Component<{
     bracketId && this.props.getBracket(bracketId);
   }
 
+  componentWillUnmount() {
+    const { bracketId } = this.props;
+
+    bracketId && this.props.ungetBracket(bracketId);
+  }
+
   render() {
-    const { bracket: { isLoading, bracket } } = this.props;
+    const { bracket: { isLoading, bracket }, bracketId } = this.props;
 
     if (bracket && !isLoading) {
       const { complete, name, round, seeds } = bracket;
       const numberOfRounds = Math.floor(Math.log2(seeds.length));
-      const [rounds] = bracketify(bracket);
+      const rounds = bracketify(bracket);
 
       let winner;
       if (complete && round === numberOfRounds) {
@@ -58,6 +67,7 @@ class Bracket extends React.Component<{
           <BracketContainer>
             {rounds.map((e, i) => (
               <Round
+                onSeedClick={seed => this.props.voteSeed(bracketId, bracket.user_id, seed)}
                 key={`round-${i}`}
                 elements={e}
                 round={i + 1}
@@ -82,5 +92,5 @@ export default connect(
     bracket: state.bracket,
     bracketId: props.match.params.id
   }),
-  { getBracket }
+  { getBracket, ungetBracket, voteSeed }
 )(Bracket);

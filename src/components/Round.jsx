@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Pair from 'components/Pair';
@@ -21,28 +20,30 @@ const RoundDetails = styled.section`
   align-self: center;
 `;
 
-const Round = ({ elements, isFinalRound, currentRound, complete, round, numberOfRounds }) => (
+type RoundProps = {
+  onSeedClick: Function,
+  complete: boolean,
+  isFinalRound: boolean,
+  currentRound: number,
+  round: number,
+  numberOfRounds: number,
+  elements: Array<Array<Object>>
+};
+
+const Round = ({ elements, isFinalRound, currentRound, complete, round, numberOfRounds, onSeedClick }: RoundProps) => (
   <RoundContainer numberOfRounds={numberOfRounds}>
     <RoundDetails>{isFinalRound ? 'Final' : `Round ${round}`}</RoundDetails>
     {elements.map((e, i) => (
-      <Pair key={`pair-${i}`} elements={e} complete={complete} currentRound={currentRound} round={round} />
+      <Pair
+        key={`pair-${i}`}
+        elements={e}
+        complete={complete}
+        currentRound={currentRound}
+        round={round}
+        onSeedClick={onSeedClick}
+      />
     ))}
   </RoundContainer>
 );
-
-Round.propTypes = {
-  complete: PropTypes.bool.isRequired,
-  isFinalRound: PropTypes.bool.isRequired,
-  currentRound: PropTypes.number.isRequired,
-  round: PropTypes.number.isRequired,
-  numberOfRounds: PropTypes.number.isRequired,
-  elements: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)).isRequired
-};
-
-Round.defaultProps = {
-  current: false,
-  elements: [],
-  isFinalRound: false
-};
 
 export default Round;

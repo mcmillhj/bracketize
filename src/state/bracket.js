@@ -6,7 +6,7 @@ import { db } from 'firebaze';
 export const getBracket = (id: number) => (dispatch: Function) => {
   dispatch({ type: reducerTypes.GET_BRACKET_REQUEST });
 
-  const bracketRef = db.subscribeBracket(id);
+  const bracketRef = db.getBracket(id);
 
   bracketRef.on('value', snapshot => {
     dispatch({
@@ -15,6 +15,13 @@ export const getBracket = (id: number) => (dispatch: Function) => {
     });
   });
 };
+
+export const ungetBracket = (authUser: Object) => () => db.getBracket(authUser.uid).off('value');
+
+export const changeComplete = (id: number, user_id: number) => () =>
+  db.doUpdateBracket(id, user_id, { complete: true });
+export const changeRound = (id: number, user_id: number, round: number) => () =>
+  db.doUpdateBracket(id, user_id, { round });
 
 export const deleteBracket = (authUser: Object, bracketId: number) => (dispatch: Function) => {
   return db

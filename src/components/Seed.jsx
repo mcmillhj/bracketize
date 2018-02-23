@@ -1,11 +1,12 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Image } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 const SeedContainer = styled.section`
   position: relative;
-  background-color: white;
+  background-color: ${props => (props.active ? 'lightgreen' : 'white')};
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   opacity: ${props => (props.winner ? 1 : 0.5)};
   margin: ${3 / 16}rem 0;
@@ -68,28 +69,26 @@ const Votes = styled.span`
   font-weight: bold;
 `;
 
-const Seed = ({ e, round, winner }) => (
-  <SeedContainer winner={winner}>
-    <SeedImageContainer>{e.image && <SeedImage src={e.image} alt={e.alt} />}</SeedImageContainer>
-    <SeedNumber>{e.seed}</SeedNumber>
-    <SeedName>{e.title}</SeedName>
+type SeedProps = {
+  round: number,
+  winner: boolean,
+  active: boolean,
+  e: { seed: number, title: string, image: string, votes: Array<number> },
+  onClick: Function
+};
+
+const Seed = ({ e: { image, seed, title, votes, ...rest }, active, round, winner, onClick }: SeedProps) => (
+  <SeedContainer
+    winner={winner}
+    active={active}
+    onClick={event => onClick(event, { image, seed, title, votes, ...rest })}>
+    <SeedImageContainer>{image && <SeedImage src={image} alt={title} />}</SeedImageContainer>
+    <SeedNumber>{seed}</SeedNumber>
+    <SeedName>{title}</SeedName>
     <Votes>
-      <p>{e.votes[round - 1]}</p>
+      <p>{votes[round - 1]}</p>
     </Votes>
   </SeedContainer>
 );
-
-Seed.propTypes = {
-  round: PropTypes.number.isRequired,
-  winner: PropTypes.bool.isRequired,
-  e: PropTypes.shape({
-    seed: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    votes: PropTypes.arrayOf(PropTypes.number.isRequired)
-  }).isRequired
-};
-
-Seed.defaultProps = {};
 
 export default Seed;

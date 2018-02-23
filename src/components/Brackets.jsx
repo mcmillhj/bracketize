@@ -3,11 +3,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Card, Container, Grid, Header, Image, List } from 'semantic-ui-react';
+import { Button, Card, Container, Dropdown, Grid, Header, Image, List } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { deleteBracket } from 'state/bracket';
-import { getBrackets } from 'state/brackets';
+import { changeComplete, changeRound, deleteBracket } from 'state/bracket';
+import { getBrackets, ungetBrackets } from 'state/brackets';
 
 const BracketButton = styled(Button)`
   &&& {
@@ -22,6 +22,14 @@ const BracketCard = styled(Card)`
   }
 `;
 
+const BracketCardContent = styled(Card.Content)`
+  &&& {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
+
 const BracketCardImage = styled(Image)`
   &&& {
     position: absolute;
@@ -33,8 +41,11 @@ const BracketCardImage = styled(Image)`
 class Brackets extends React.Component<{
   authUser: Object | null,
   brackets: Array<Object>,
+  changeComplete: Function,
+  changeRound: Function,
   deleteBracket: Function,
-  getBrackets: Function
+  getBrackets: Function,
+  ungetBrackets: Function
 }> {
   componentWillReceiveProps(nextProps) {
     nextProps.authUser && !this.props.authUser && this.props.getBrackets(nextProps.authUser);
@@ -44,6 +55,12 @@ class Brackets extends React.Component<{
     const { authUser } = this.props;
 
     authUser && this.props.getBrackets(authUser);
+  }
+
+  componentWillUnmount() {
+    const { authUser } = this.props;
+
+    authUser && this.props.ungetBrackets(authUser);
   }
 
   deleteBracket = bracketId => {
@@ -64,7 +81,7 @@ class Brackets extends React.Component<{
           {brackets &&
             brackets.map(b => (
               <Grid.Column key={b.id}>
-                <BracketCard key={b.id}>
+                <BracketCard>
                   <Card.Content>
                     <BracketCardImage size="tiny" src={b.seeds[0].image} />
                     <Card.Header as="h4">{b.name}</Card.Header>
@@ -72,22 +89,35 @@ class Brackets extends React.Component<{
                     <Card.Description>
                       <List>
                         <List.Item>{`Number of seeds: ${b.size}`}</List.Item>
-                        <List.Item>{`Round: ${b.round}`}</List.Item>
+                        <List.Item>{`Current Round: ${b.round}`}</List.Item>
                         <List.Item>{`Complete: ${b.complete}`}</List.Item>
+                        <List.Item>
+                          <label>Change Round: </label>{' '}
+                          <Dropdown
+                            disabled={b.complete}
+                            defaultValue={b.round}
+                            placeholder="Change Round"
+                            onChange={(e, { value }) => this.props.changeRound(b.id, b.user_id, value)}
+                            options={Array.from(new Array(Math.floor(Math.log2(b.seeds.length))), (_, i) => i + 1).map(
+                              e => ({ text: e, value: e })
+                            )}
+                          />
+                        </List.Item>
                       </List>
                     </Card.Description>
                   </Card.Content>
-                  <Card.Content extra>
+                  <BracketCardContent extra>
                     <BracketButton onClick={() => this.cloneBracket(b.id)} disabled>
                       Clone Bracket
                     </BracketButton>
-                    <BracketButton onClick={() => this.deleteBracket(b.id)} disabled>
-                      Delete Bracket
-                    </BracketButton>
-                    <BracketButton as={Link} key={b.id} to={`/brackets/${b.id}`}>
+                    <BracketButton onClick={() => this.deleteBracket(b.id)}>Delete Bracket</BracketButton>
+                    <BracketButton as={Link} to={`/brackets/${b.id}`}>
                       View Bracket
                     </BracketButton>
-                  </Card.Content>
+                    <BracketButton onClick={() => this.props.changeComplete(b.id, b.user_id)} disabled={b.complete}>
+                      Mark as Complete
+                    </BracketButton>
+                  </BracketCardContent>
                 </BracketCard>
               </Grid.Column>
             ))}
@@ -102,5 +132,5 @@ export default connect(
     authUser: state.auth.authUser,
     brackets: state.brackets
   }),
-  { deleteBracket, getBrackets }
+  { changeComplete, changeRound, deleteBracket, getBrackets, ungetBrackets }
 )(Brackets);

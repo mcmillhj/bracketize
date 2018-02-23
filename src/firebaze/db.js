@@ -19,22 +19,31 @@ export const doCreateBracket = (user_id, payload) =>
     const newBracketId = bracketsRef().push().key;
     const newBracket = {};
 
-    newBracket[`brackets/${newBracketId}`] = payload;
-    newBracket[`users/${user_id}/brackets/${newBracketId}`] = payload;
+    newBracket[`brackets/${newBracketId}`] = { ...payload, user_id };
+    newBracket[`users/${user_id}/brackets/${newBracketId}`] = { ...payload, user_id };
 
     db.ref().update(newBracket);
   });
 
-export const doUpdateBracketWithVotes = (id, payload) =>
+export const doUpdateBracketWithVotes = (id, user_id, seed) =>
   new Promise(() => {
-    console.log('PAYLOAD = ', payload);
+    bracketRef(id).once('value', snapshot => {
+      const { seeds } = snapshot.val();
+      const newSeeds = seeds.map(s => (s.seed === seed.seed ? seed : s));
 
-    bracketRef(id).update({ seeds: payload.seeds });
+      return Promise.all([
+        bracketRef(id).update({ seeds: newSeeds }),
+        userBracketRef(user_id, id).update({ seeds: newSeeds })
+      ]);
+    });
   });
+
+export const doUpdateBracket = (id, user_id, updatedField) =>
+  Promise.all([bracketRef(id).update(updatedField), userBracketRef(user_id, id).update(updatedField)]);
 
 export const doDeleteBracket = (user_id, id) =>
   Promise.all([bracketRef(id).remove(), userBracketRef(user_id, id).remove()]);
 
-export const subscribeBrackets = user_id => userBracketsRef(user_id);
+export const getBrackets = user_id => userBracketsRef(user_id);
 
-export const subscribeBracket = id => bracketRef(id);
+export const getBracket = id => bracketRef(id);

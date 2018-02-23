@@ -3,20 +3,11 @@
 import * as reducerTypes from 'constants/reducerTypes';
 import { db } from 'firebaze';
 
-export const voteSeed = id => (dispatch: Function) => {
-  const bracketsRef = db.subscribeBrackets();
-
-  bracketsRef.on('value', snapshot => {
-    if (snapshot && snapshot.val()) {
-      dispatch({
-        type: reducerTypes.GET_BRACKETS,
-        payload: Object.keys(snapshot.val()).map(k => ({
-          id: k,
-          ...snapshot.val()[k]
-        }))
-      });
-    }
-  });
+export const voteSeed = (id: number, user_id: number, seed: Object) => () => {
+  return db
+    .doUpdateBracketWithVotes(id, user_id, seed)
+    .then(resp => console.log('RESP = ', resp))
+    .catch(err => console.error('ERR = ', err));
 };
 
 // reducer
