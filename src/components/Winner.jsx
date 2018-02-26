@@ -47,7 +47,9 @@ class Winner extends React.Component<{ winner: Object }, { open: boolean }> {
         <Modal.Header>{winner.title}</Modal.Header>
         <Modal.Content image>
           <Image size="big" src={winner.image} alt={winner.alt} />
-          <Modal.Description>{winner.synopsis}</Modal.Description>
+          <Modal.Description>
+            <p>{winner.synopsis}</p>
+          </Modal.Description>
         </Modal.Content>
       </Modal>
     );
