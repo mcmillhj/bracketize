@@ -26,7 +26,7 @@ const BracketCardContent = styled(Card.Content)`
   &&& {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
   }
 `;
 
@@ -108,14 +108,14 @@ class Brackets extends React.Component<{
                   </Card.Content>
                   <BracketCardContent extra>
                     <BracketButton onClick={() => this.cloneBracket(b.id)} disabled>
-                      Clone Bracket
+                      Clone
                     </BracketButton>
-                    <BracketButton onClick={() => this.deleteBracket(b.id)}>Delete Bracket</BracketButton>
+                    <BracketButton onClick={() => this.deleteBracket(b.id)}>Delete</BracketButton>
                     <BracketButton as={Link} to={`/brackets/${b.id}`}>
-                      View Bracket
+                      View
                     </BracketButton>
                     <BracketButton onClick={() => this.props.changeComplete(b.id, b.user_id)} disabled={b.complete}>
-                      Mark as Complete
+                      Complete
                     </BracketButton>
                   </BracketCardContent>
                 </BracketCard>

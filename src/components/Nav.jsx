@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Icon, Menu, Segment } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -18,6 +18,12 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
   state = {
     activeItem: ''
   };
+
+  componentDidMount() {
+    const { location: { pathname } } = this.props;
+
+    pathname && this.handleItemClick(null, { name: pathname.replace('/', '') });
+  }
 
   handleItemClick = (e: Event, { name }: { name: string }) => this.setState({ activeItem: name });
 
@@ -36,8 +42,8 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
             <Menu.Item
               as={Link}
               to="/brackets"
-              name="Brackets"
-              active={activeItem === 'Brackets'}
+              name="brackets"
+              active={activeItem === 'brackets'}
               onClick={this.handleItemClick}>
               Brackets
             </Menu.Item>
@@ -47,8 +53,8 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
             <Menu.Item
               as={Link}
               to="/create-bracket"
-              name="Create New Bracket"
-              active={activeItem === 'Create New Bracket'}
+              name="create-bracket"
+              active={activeItem === 'create-bracket'}
               onClick={this.handleItemClick}>
               New Bracket
             </Menu.Item>
@@ -80,8 +86,8 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
               <Menu.Item
                 as={Link}
                 to="/signin"
-                name="login"
-                active={activeItem === 'login'}
+                name="signin"
+                active={activeItem === 'signin'}
                 onClick={this.handleItemClick}>
                 Login
               </Menu.Item>
@@ -93,6 +99,8 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
   }
 }
 
-export default connect(state => ({
-  authUser: state.auth.authUser
-}))(Nav);
+export default withRouter(
+  connect(state => ({
+    authUser: state.auth.authUser
+  }))(Nav)
+);
