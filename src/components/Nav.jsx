@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import { auth } from 'firebaze';
 
-const SquareMenu = styled(Menu)`
+const SquareSegment = styled(Segment)`
   &&& {
     border-radius: 0;
   }
@@ -26,8 +26,8 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
     const { authUser } = this.props;
 
     return (
-      <Segment inverted>
-        <SquareMenu size="large" inverted secondary pointing>
+      <SquareSegment inverted>
+        <Menu size="large" inverted secondary pointing>
           <Menu.Item as={Link} to="/">
             <Icon name="code" size="large" />
           </Menu.Item>
@@ -87,8 +87,8 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
               </Menu.Item>
             )}
           </Menu.Menu>
-        </SquareMenu>
-      </Segment>
+        </Menu>
+      </SquareSegment>
     );
   }
 }
