@@ -38,19 +38,18 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
             <Icon name="code" size="large" />
           </Menu.Item>
 
-          {authUser && (
+          {authUser && [
             <Menu.Item
+              key="brackets"
               as={Link}
               to="/brackets"
               name="brackets"
               active={activeItem === 'brackets'}
               onClick={this.handleItemClick}>
               Brackets
-            </Menu.Item>
-          )}
-
-          {authUser && (
+            </Menu.Item>,
             <Menu.Item
+              key="create-bracket"
               as={Link}
               to="/create-bracket"
               name="create-bracket"
@@ -58,7 +57,7 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
               onClick={this.handleItemClick}>
               New Bracket
             </Menu.Item>
-          )}
+          ]}
 
           <Menu.Menu position="right">
             {authUser ? (
