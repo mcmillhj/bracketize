@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, Image, Modal } from 'semantic-ui-react';
 import styled, { keyframes } from 'styled-components';
 
@@ -28,13 +27,21 @@ const Rays = styled.div`
   backface-visibility: hidden;
 `;
 
-class Winner extends React.Component<{ winner: Object }, { open: boolean }> {
+type WinnerProps = {
+  image: string,
+  seed: number,
+  synopsis: string,
+  title: string,
+  votes: Array<number>
+};
+
+class Winner extends React.Component<WinnerProps, { open: boolean }> {
   state = {
     open: true
   };
 
   render() {
-    const { winner } = this.props;
+    const { image, synopsis, title } = this.props;
 
     return (
       <Modal
@@ -44,25 +51,16 @@ class Winner extends React.Component<{ winner: Object }, { open: boolean }> {
         basic
         closeIcon>
         <Rays />
-        <Modal.Header>{winner.title}</Modal.Header>
+        <Modal.Header>{title}</Modal.Header>
         <Modal.Content image>
-          <Image size="big" src={winner.image} alt={winner.alt} />
+          <Image size="big" src={image} />
           <Modal.Description>
-            <p>{winner.synopsis}</p>
+            <p>{synopsis}</p>
           </Modal.Description>
         </Modal.Content>
       </Modal>
     );
   }
 }
-
-Winner.propTypes = {
-  winner: PropTypes.shape({
-    seed: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    votes: PropTypes.arrayOf(PropTypes.number.isRequired)
-  }).isRequired
-};
 
 export default Winner;

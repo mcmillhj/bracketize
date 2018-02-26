@@ -61,7 +61,7 @@ class Bracket extends React.Component<{
 
       return (
         <PageContainer>
-          {winner ? <Winner winner={winner} /> : null}
+          {winner ? <Winner {...winner} /> : null}
 
           <Header as="h1">{name}</Header>
           <BracketContainer>
