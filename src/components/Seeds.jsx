@@ -150,7 +150,7 @@ class Seeds extends React.Component {
         </Center>
 
         {seeds.length > 0 && (
-          <Grid doubling stretched columns={4}>
+          <Grid columns={4} container doubling stretched stackable>
             {seeds.map(c => (
               <Grid.Column key={c.title}>
                 <Card>

@@ -77,7 +77,7 @@ class Brackets extends React.Component<{
     return (
       <Container>
         <Header as="h1">My Brackets</Header>
-        <Grid columns={2} doubling stretched>
+        <Grid columns={2} container doubling stretched stackable>
           {brackets &&
             brackets.map(b => (
               <Grid.Column key={b.id}>
