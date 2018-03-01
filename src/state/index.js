@@ -6,6 +6,7 @@ import { reducer as bracket } from 'state/bracket';
 import { reducer as brackets } from 'state/brackets';
 import { reducer as createBracket } from 'state/createBracket';
 import { reducer as seeds } from 'state/seeds';
+import { reducer as vote } from 'state/vote';
 
 export default combineReducers({
   auth,
@@ -13,5 +14,6 @@ export default combineReducers({
   brackets,
   createBracket,
   form: formReducer,
-  seeds
+  seeds,
+  vote
 });

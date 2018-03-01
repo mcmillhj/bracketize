@@ -67,7 +67,7 @@ class Bracket extends React.Component<{
           <BracketContainer>
             {rounds.map((e, i) => (
               <Round
-                onSeedClick={seed => this.props.voteSeed(bracketId, bracket.user_id, seed)}
+                onSeedClick={seed => this.props.voteSeed(bracketId, bracket.user_id, round, seed)}
                 key={`round-${i}`}
                 elements={e}
                 round={i + 1}

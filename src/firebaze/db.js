@@ -25,18 +25,17 @@ export const doCreateBracket = (user_id, payload) =>
     db.ref().update(newBracket);
   });
 
-export const doUpdateBracketWithVotes = (id, user_id, seed) =>
-  new Promise(() => {
-    bracketRef(id).once('value', snapshot => {
-      const { seeds } = snapshot.val();
-      const newSeeds = seeds.map(s => (s.seed === seed.seed ? seed : s));
+export const doUpdateBracketWithVotes = (id, user_id, seed) => {
+  return bracketRef(id).once('value', snapshot => {
+    const { seeds } = snapshot.val();
+    const newSeeds = seeds.map(s => (s.seed === seed.seed ? seed : s));
 
-      return Promise.all([
-        bracketRef(id).update({ seeds: newSeeds }),
-        userBracketRef(user_id, id).update({ seeds: newSeeds })
-      ]);
-    });
+    return Promise.all([
+      bracketRef(id).update({ seeds: newSeeds }),
+      userBracketRef(user_id, id).update({ seeds: newSeeds })
+    ]);
   });
+};
 
 export const doUpdateBracket = (id, user_id, updatedField) =>
   Promise.all([bracketRef(id).update(updatedField), userBracketRef(user_id, id).update(updatedField)]);

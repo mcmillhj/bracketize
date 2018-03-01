@@ -69,7 +69,9 @@ class Brackets extends React.Component<{
     this.props.deleteBracket(authUser, bracketId);
   };
 
-  cloneBracket = bracketId => {};
+  cloneBracket = bracketId => {
+    console.log(bracketId);
+  };
 
   render() {
     const { brackets } = this.props;
