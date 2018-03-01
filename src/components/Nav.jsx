@@ -21,7 +21,6 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
 
   componentDidMount() {
     const { location: { pathname } } = this.props;
-
     pathname && this.handleItemClick(null, { name: pathname.replace('/', '') });
   }
 
@@ -44,7 +43,7 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
               as={Link}
               to="/brackets"
               name="brackets"
-              active={activeItem === 'brackets'}
+              active={/brackets/.test(activeItem)}
               onClick={this.handleItemClick}>
               Brackets
             </Menu.Item>,
@@ -53,7 +52,7 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
               as={Link}
               to="/create-bracket"
               name="create-bracket"
-              active={activeItem === 'create-bracket'}
+              active={/create-bracket/.test(activeItem)}
               onClick={this.handleItemClick}>
               New Bracket
             </Menu.Item>
@@ -67,7 +66,7 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
                   as={Link}
                   to="/account"
                   name="account"
-                  active={activeItem === 'account'}
+                  active={/account/.test(activeItem)}
                   onClick={this.handleItemClick}>
                   Account
                 </Menu.Item>,
@@ -76,7 +75,7 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
                   as={Link}
                   to="/"
                   name="signout"
-                  active={activeItem === 'signout'}
+                  active={/signout/.test(activeItem)}
                   onClick={auth.doSignOut}>
                   Sign Out
                 </Menu.Item>
@@ -86,7 +85,7 @@ class Nav extends Component<{ authUser: Object | null }, { activeItem: string }>
                 as={Link}
                 to="/signin"
                 name="signin"
-                active={activeItem === 'signin'}
+                active={/signin/.test(activeItem)}
                 onClick={this.handleItemClick}>
                 Login
               </Menu.Item>
