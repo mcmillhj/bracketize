@@ -14,7 +14,7 @@ const SquareSegment = styled(Segment)`
   }
 `;
 
-class Nav extends Component<{ authUser: Object | null }, { activeItem: string }> {
+class Nav extends Component<{ authUser: Object | null, location: Object }, { activeItem: string }> {
   state = {
     activeItem: ''
   };
