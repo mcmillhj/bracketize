@@ -24,7 +24,7 @@ class Nav extends Component<{ authUser: Object | null, location: Object }, { act
     pathname && this.handleItemClick(null, { name: pathname.replace('/', '') });
   }
 
-  handleItemClick = (e: Event, { name }: { name: string }) => this.setState({ activeItem: name });
+  handleItemClick = (_, { name }: { name: string }) => this.setState({ activeItem: name });
 
   render() {
     const { activeItem } = this.state;
