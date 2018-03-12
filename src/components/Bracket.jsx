@@ -16,6 +16,7 @@ const BracketContainer = styled.section`
   justify-content: space-between;
   flex-direction: row;
   flex-wrap: wrap;
+  padding: 1rem;
 `;
 
 const PageContainer = styled(Container)`

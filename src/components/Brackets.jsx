@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Card, Container, Dropdown, Grid, Header, Image, List } from 'semantic-ui-react';
+import { Button, Card, Container, Dropdown, Grid, Header, Icon, Image, List, Modal } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { changeComplete, changeRound, deleteBracket } from 'state/bracket';
@@ -39,6 +39,66 @@ const BracketCardImage = styled(Image)`
   }
 `;
 
+const ErrorText = styled.span`
+  font-size: ${12 / 16}rem;
+  color: red;
+`;
+
+class DeleteBracketModal extends React.Component<
+  { authUser: Object | null, bracket: Object, deleteBracket: Function },
+  { modalOpen: boolean, error: Object | null }
+> {
+  state = { modalOpen: false, error: null };
+
+  handleOpen = () => this.setState({ modalOpen: true });
+
+  handleClose = () => this.setState({ modalOpen: false });
+
+  deleteBracket = bracketId => {
+    const { authUser } = this.props;
+
+    this.props.deleteBracket(authUser, bracketId);
+  };
+
+  render() {
+    const { error } = this.state;
+    const { bracket: { name, id } } = this.props;
+
+    return (
+      <Modal
+        open={this.state.modalOpen}
+        onClose={this.handleClose}
+        trigger={
+          <BracketButton negative onClick={this.handleOpen}>
+            Delete
+          </BracketButton>
+        }
+        size="small">
+        <Header icon="user delete" content={`Delete ${name}`} />
+        <Modal.Content>
+          <p>{`Are you sure you want to delete bracket "${name}"? This action is not reversible`}</p>
+
+          {error && <ErrorText>{error.message}</ErrorText>}
+        </Modal.Content>
+        <Modal.Actions>
+          <Button color="red" inverted onClick={this.handleClose}>
+            <Icon name="remove" /> No
+          </Button>
+          <Button
+            color="green"
+            inverted
+            onClick={() => {
+              this.deleteBracket(id);
+              this.handleClose();
+            }}>
+            <Icon name="checkmark" /> Yes
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  }
+}
+
 class Brackets extends React.Component<{
   authUser: Object | null,
   brackets: Array<Object>,
@@ -70,12 +130,14 @@ class Brackets extends React.Component<{
     this.props.deleteBracket(authUser, bracketId);
   };
 
+  completeBracket = ({ id, user_id }) => this.props.changeComplete(id, user_id);
+
   cloneBracket = bracketId => {
     console.log(bracketId);
   };
 
   render() {
-    const { brackets } = this.props;
+    const { authUser, brackets } = this.props;
 
     return (
       <Container>
@@ -113,13 +175,13 @@ class Brackets extends React.Component<{
                     <BracketButton onClick={() => this.cloneBracket(b.id)} disabled>
                       Clone
                     </BracketButton>
-                    <BracketButton onClick={() => this.deleteBracket(b.id)}>Delete</BracketButton>
                     <BracketButton as={Link} to={`/brackets/${b.id}`}>
                       View
                     </BracketButton>
-                    <BracketButton onClick={() => this.props.changeComplete(b.id, b.user_id)} disabled={b.complete}>
+                    <BracketButton positive onClick={() => this.completeBracket(b)} disabled={b.complete}>
                       Complete
                     </BracketButton>
+                    <DeleteBracketModal authUser={authUser} bracket={b} deleteBracket={this.props.deleteBracket} />
                   </BracketCardContent>
                 </BracketCard>
               </Grid.Column>
