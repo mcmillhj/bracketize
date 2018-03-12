@@ -20,10 +20,10 @@ class Pair extends React.Component<PairProps, { activeSeed: Object | null }> {
   };
 
   handleSeedClick = (e: Event, seed: Object) => {
-    const { onSeedClick, currentRound, round } = this.props;
+    const { onSeedClick, complete, currentRound, round } = this.props;
     const { activeSeed } = this.state;
 
-    round === currentRound &&
+    round === currentRound && !complete &&
       !_.isEqual(activeSeed, seed) &&
       this.setState(
         { activeSeed: { ...seed, votes: seed.votes.map((v, i) => (i + 1 === currentRound ? v + 1 : v)) } },
