@@ -44,6 +44,13 @@ const ErrorText = styled.span`
   color: red;
 `;
 
+const GridColumn = styled(Grid.Column)`
+  &&&& {
+    padding-left: 0;
+    padding-right: 0;
+  }
+`;
+
 class DeleteBracketModal extends React.Component<
   { authUser: Object | null, bracket: Object, deleteBracket: Function },
   { modalOpen: boolean, error: Object | null }
@@ -145,7 +152,7 @@ class Brackets extends React.Component<{
         <Grid columns={2} container doubling stretched stackable>
           {brackets &&
             brackets.map(b => (
-              <Grid.Column key={b.id}>
+              <GridColumn key={b.id}>
                 <BracketCard>
                   <Card.Content>
                     <BracketCardImage size="tiny" src={b.seeds[0].image} />
@@ -184,7 +191,7 @@ class Brackets extends React.Component<{
                     <DeleteBracketModal authUser={authUser} bracket={b} deleteBracket={this.props.deleteBracket} />
                   </BracketCardContent>
                 </BracketCard>
-              </Grid.Column>
+              </GridColumn>
             ))}
         </Grid>
       </Container>
