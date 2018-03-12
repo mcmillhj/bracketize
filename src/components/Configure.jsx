@@ -78,7 +78,7 @@ class Configure extends React.Component {
             />
           </div>
 
-          <div>
+          {/* <div>
             <FormHeader sub>
               Allow Nominations <Icon fitted name="question circle outline" />
             </FormHeader>
@@ -89,7 +89,7 @@ class Configure extends React.Component {
               as={SemanticForm.Checkbox}
               toggle
             />
-          </div>
+          </div> */}
 
           <div>
             <FormHeader sub>Bracket Size</FormHeader>

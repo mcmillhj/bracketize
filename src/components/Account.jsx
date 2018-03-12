@@ -31,7 +31,7 @@ const ErrorText = styled.span`
 `;
 
 class DeleteAccountModal extends React.Component<
-  { redirectToHome: Function, authUser: Object | null },
+  { redirectToHome: Function, authUser: Object },
   { modalOpen: boolean, error: Object | null }
 > {
   state = { modalOpen: false, error: null };
@@ -96,7 +96,7 @@ class DeleteAccountModal extends React.Component<
   }
 }
 
-const AccountPage = ({ authUser, history }: { authUser: Object | null, history: Object }) => (
+const AccountPage = ({ authUser, history }: { authUser: Object, history: Object }) => (
   <AccountContainer>
     <AccountHeader>Logged in as {authUser && authUser.email}</AccountHeader>
     <AccountHeader sub>Change your Password?</AccountHeader>

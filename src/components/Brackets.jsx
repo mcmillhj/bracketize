@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import { changeComplete, changeRound, deleteBracket } from 'state/bracket';
 import { getBrackets, ungetBrackets } from 'state/brackets';
+import withAuthorization from 'hoc/withAuthorization';
 
 const BracketButton = styled(Button)`
   &&& {
@@ -129,10 +130,12 @@ class Brackets extends React.Component<{
   }
 }
 
-export default connect(
-  state => ({
-    authUser: state.auth.authUser,
-    brackets: state.brackets
-  }),
-  { changeComplete, changeRound, deleteBracket, getBrackets, ungetBrackets }
-)(Brackets);
+export default withAuthorization(
+  connect(
+    state => ({
+      authUser: state.auth.authUser,
+      brackets: state.brackets
+    }),
+    { changeComplete, changeRound, deleteBracket, getBrackets, ungetBrackets }
+  )(Brackets)
+);
