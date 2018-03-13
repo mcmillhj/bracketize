@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Card, Container, Dropdown, Grid, Header, Icon, Image, List, Modal } from 'semantic-ui-react';
+import { Button, Card, Container, Dropdown, Grid, Header, Icon, Image, List, Modal, Table } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { changeComplete, changeRound, deleteBracket } from 'state/bracket';
@@ -160,23 +160,37 @@ class Brackets extends React.Component<{
                     <Card.Header as="h4">{b.name}</Card.Header>
                     <Card.Meta>{new Date(b.created).toUTCString()}</Card.Meta>
                     <Card.Description>
-                      <List>
-                        <List.Item>{`Number of seeds: ${b.size}`}</List.Item>
-                        <List.Item>{`Current Round: ${b.round}`}</List.Item>
-                        <List.Item>{`Complete: ${b.complete}`}</List.Item>
-                        <List.Item>
-                          <label>Change Round: </label>{' '}
-                          <Dropdown
-                            disabled={b.complete}
-                            defaultValue={b.round}
-                            placeholder="Change Round"
-                            onChange={(e, { value }) => this.props.changeRound(b.id, b.user_id, value)}
-                            options={Array.from(new Array(Math.floor(Math.log2(b.seeds.length))), (_, i) => i + 1).map(
-                              e => ({ text: e, value: e })
-                            )}
-                          />
-                        </List.Item>
-                      </List>
+                      <Table singleLine striped fixed unstackable basic="very" size="small" columns={2}>
+                        <Table.Body>
+                          <Table.Row>
+                            <Table.Cell>Number of seeds:</Table.Cell>
+                            <Table.Cell>{b.size}</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Current round:</Table.Cell>
+                            <Table.Cell>{b.round}</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Complete:</Table.Cell>
+                            <Table.Cell>{`${b.complete}`}</Table.Cell>
+                          </Table.Row>
+                          <Table.Row>
+                            <Table.Cell>Change Round:</Table.Cell>
+                            <Table.Cell style={{ overflow: 'visible' }}>
+                              <Dropdown
+                                disabled={b.complete}
+                                defaultValue={b.round}
+                                placeholder="Change Round"
+                                onChange={(e, { value }) => this.props.changeRound(b.id, b.user_id, value)}
+                                options={Array.from(
+                                  new Array(Math.floor(Math.log2(b.seeds.length))),
+                                  (_, i) => i + 1
+                                ).map(e => ({ text: e, value: e }))}
+                              />
+                            </Table.Cell>
+                          </Table.Row>
+                        </Table.Body>
+                      </Table>
                     </Card.Description>
                   </Card.Content>
                   <BracketCardContent extra>

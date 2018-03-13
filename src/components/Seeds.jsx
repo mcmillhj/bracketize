@@ -8,6 +8,7 @@ import elasticsearch from 'elasticsearch';
 
 import { createBracket } from 'state/createBracket';
 import { addSeed, removeSeed } from 'state/seeds';
+import { CLIENT_RENEG_LIMIT } from 'tls';
 
 const ButtonsContainer = styled.section`
   display: flex;
@@ -20,6 +21,7 @@ const Center = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
 const CloseButton = styled(Button)`
@@ -149,33 +151,35 @@ class Seeds extends React.Component {
           />
         </Center>
 
-        {seeds.length > 0 && (
-          <Grid columns={4} container doubling stretched stackable>
-            {seeds.map(c => (
-              <Grid.Column key={c.title}>
-                <Card>
-                  <CardImageContainer>
-                    <Image src={c.image} />
-                    <CloseButton
-                      icon={<Icon name="close" />}
-                      onClick={e => {
-                        e.preventDefault();
+        <Center>
+          {seeds.length > 0 && (
+            <Grid columns={4} container doubling stretched stackable>
+              {seeds.map(c => (
+                <Grid.Column key={c.title}>
+                  <Card>
+                    <CardImageContainer>
+                      <Image src={c.image} />
+                      <CloseButton
+                        icon={<Icon name="close" />}
+                        onClick={e => {
+                          e.preventDefault();
 
-                        this.props.removeSeed(c);
-                      }}
-                    />
-                  </CardImageContainer>
-                  <Card.Content textAlign={'left'}>
-                    <Card.Header>{c.title}</Card.Header>
-                    <Card.Meta>
-                      <span className="date">{`${c.start_year} - ${c.end_year}`}</span>
-                    </Card.Meta>
-                  </Card.Content>
-                </Card>
-              </Grid.Column>
-            ))}
-          </Grid>
-        )}
+                          this.props.removeSeed(c);
+                        }}
+                      />
+                    </CardImageContainer>
+                    <Card.Content textAlign={'left'}>
+                      <Card.Header>{c.title}</Card.Header>
+                      <Card.Meta>
+                        <span className="date">{`${c.start_year} - ${c.end_year}`}</span>
+                      </Card.Meta>
+                    </Card.Content>
+                  </Card>
+                </Grid.Column>
+              ))}
+            </Grid>
+          )}
+        </Center>
 
         <ButtonsContainer>
           <Button animated type="button" onClick={() => this.props.back()}>
