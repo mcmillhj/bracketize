@@ -3,7 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, Card, Container, Dropdown, Grid, Header, Icon, Image, List, Modal, Table } from 'semantic-ui-react';
+import { Button, Card, Container, Dropdown, Grid, Header, Icon, Image, Modal, Table } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import { changeComplete, changeRound, deleteBracket } from 'state/bracket';
