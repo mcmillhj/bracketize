@@ -125,7 +125,7 @@ const NavDesktop = ({ activeItem, authUser, onItemClick, leftItems, rightItems }
   </SquareMenu>
 );
 
-class NavBar extends Component<
+class Nav extends Component<
   { children: any, authUser: Object, leftItems: Array<Object>, rightItems: Array<Object>, location: Object },
   { activeItem: string, visible: boolean }
 > {
@@ -191,5 +191,5 @@ class NavBar extends Component<
 export default withRouter(
   connect(state => ({
     authUser: state.auth.authUser
-  }))(NavBar)
+  }))(Nav)
 );
