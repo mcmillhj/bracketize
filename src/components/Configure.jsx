@@ -5,8 +5,10 @@ import { Button, Form as SemanticForm, Header, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 const ErrorText = styled.span`
+  display: inline-block;
   font-size: ${12 / 16}rem;
   color: red;
+  padding: ${4 / 16}rem;
 `;
 
 const FormFieldsContainer = styled.section`

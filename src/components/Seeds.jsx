@@ -187,8 +187,8 @@ class Seeds extends React.Component {
               <Icon name="left arrow" />
             </Button.Content>
           </Button>
-          <Button animated disabled={seeds.length !== bracketSize}>
-            <Button.Content visible>Next</Button.Content>
+          <Button animated positive disabled={seeds.length !== bracketSize}>
+            <Button.Content visible>Create</Button.Content>
             <Button.Content hidden>
               <Icon name="right arrow" />
             </Button.Content>

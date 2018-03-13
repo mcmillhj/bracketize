@@ -8,12 +8,8 @@ export const createBracket = (authUser: Object, payload: Object) => (dispatch: F
 
   return db
     .doCreateBracket(authUser.uid, payload)
-    .then(response => {
-      dispatch(createBracketComplete(response.key));
-    })
-    .catch(error => {
-      dispatch(createBracketFailed(error));
-    });
+    .then(response => dispatch(createBracketComplete(response)))
+    .catch(error => dispatch(createBracketFailed(error)));
 };
 
 export const createBracketComplete = (payload: Object) => ({ type: reducerTypes.CREATE_BRACKET, payload });
