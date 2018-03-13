@@ -59,7 +59,7 @@ const rightItems = [
 const NavMobile = ({ leftItems, onToggle, onItemClick, rightItems, authUser, activeItem, visible }) => (
   <SquareMenu borderless inverted>
     <Dropdown icon={<Icon size="large" name="bars" />} onClick={onToggle} simple={visible} item>
-      <Menu pointing stackable>
+      <Menu stackable>
         {leftItems
           .filter(item => !!authUser === item.requiresAuth)
           .map(item => (
