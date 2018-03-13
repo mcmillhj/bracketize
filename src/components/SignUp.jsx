@@ -13,8 +13,10 @@ const FormFieldsContainer = styled.section`
 `;
 
 const ErrorText = styled.span`
+  display: inline-block;
   font-size: ${12 / 16}rem;
   color: red;
+  padding: ${4 / 16}rem;
 `;
 
 const SignUpInput = styled(Input)`

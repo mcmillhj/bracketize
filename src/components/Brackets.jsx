@@ -46,8 +46,9 @@ const ErrorText = styled.span`
 
 const GridColumn = styled(Grid.Column)`
   &&&& {
-    padding-left: 0;
-    padding-right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 

@@ -11,7 +11,7 @@ import SignIn from 'components/SignIn';
 import SignUp from 'components/SignUp';
 
 export default () => (
-  <main>
+  <main style={{ padding: '1rem' }}>
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/account" component={Account} />

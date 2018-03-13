@@ -26,8 +26,10 @@ const AccountHeader = styled(Header)`
 `;
 
 const ErrorText = styled.span`
+  display: inline-block;
   font-size: ${12 / 16}rem;
   color: red;
+  padding: ${4 / 16}rem;
 `;
 
 class DeleteAccountModal extends React.Component<
