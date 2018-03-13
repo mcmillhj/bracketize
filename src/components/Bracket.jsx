@@ -16,7 +16,10 @@ const BracketContainer = styled.section`
   justify-content: space-between;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 1rem;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
 `;
 
 const PageContainer = styled(Container)`

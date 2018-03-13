@@ -9,6 +9,7 @@ const RoundContainer = styled.section`
   justify-content: space-around;
   flex-basis: ${props => `calc((100% / ${props.numberOfRounds}) - 1%)`};
   position: relative;
+  margin-top: 2.5rem;
 `;
 
 const RoundDetails = styled.section`
@@ -31,7 +32,7 @@ type RoundProps = {
 };
 
 const Round = ({ elements, isFinalRound, currentRound, complete, round, numberOfRounds, onSeedClick }: RoundProps) => (
-  <RoundContainer numberOfRounds={numberOfRounds}>
+  <RoundContainer className="round" numberOfRounds={numberOfRounds}>
     <RoundDetails>{isFinalRound ? 'Final' : `Round ${round}`}</RoundDetails>
     {elements.map((e, i) => (
       <Pair

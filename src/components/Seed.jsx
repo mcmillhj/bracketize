@@ -11,6 +11,7 @@ const SeedContainer = styled.section`
   opacity: ${props => (props.winner ? 1 : 0.5)};
   margin: ${3 / 16}rem 0;
   height: ${50 / 16}rem;
+  min-width: 10rem;
 
   display: flex;
   justify-content: space-between;

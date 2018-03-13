@@ -8,7 +8,6 @@ import elasticsearch from 'elasticsearch';
 
 import { createBracket } from 'state/createBracket';
 import { addSeed, removeSeed } from 'state/seeds';
-import { CLIENT_RENEG_LIMIT } from 'tls';
 
 const ButtonsContainer = styled.section`
   display: flex;

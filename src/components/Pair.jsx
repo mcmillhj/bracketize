@@ -1,10 +1,17 @@
 // @flow
 
 import React from 'react';
-import { List } from 'semantic-ui-react';
 import _ from 'lodash';
+import { List } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import Seed from 'components/Seed';
+
+const ListItem = styled(List.Item)`
+  &&& {
+    min-width: ${300 / 16}rem;
+  }
+`;
 
 type PairProps = {
   onSeedClick: Function,
@@ -23,7 +30,8 @@ class Pair extends React.Component<PairProps, { activeSeed: Object | null }> {
     const { onSeedClick, complete, currentRound, round } = this.props;
     const { activeSeed } = this.state;
 
-    round === currentRound && !complete &&
+    round === currentRound &&
+      !complete &&
       !_.isEqual(activeSeed, seed) &&
       this.setState(
         { activeSeed: { ...seed, votes: seed.votes.map((v, i) => (i + 1 === currentRound ? v + 1 : v)) } },
@@ -42,7 +50,7 @@ class Pair extends React.Component<PairProps, { activeSeed: Object | null }> {
 
     return (
       <List>
-        <List.Item key={'seed-1'}>
+        <ListItem key={'seed-1'}>
           <Seed
             round={round}
             e={A}
@@ -50,8 +58,8 @@ class Pair extends React.Component<PairProps, { activeSeed: Object | null }> {
             onClick={this.handleSeedClick}
             winner={(round >= currentRound && !complete) || A.votes[round - 1] >= B.votes[round - 1]}
           />
-        </List.Item>
-        <List.Item key={'seed-2'}>
+        </ListItem>
+        <ListItem key={'seed-2'}>
           <Seed
             round={round}
             e={B}
@@ -59,7 +67,7 @@ class Pair extends React.Component<PairProps, { activeSeed: Object | null }> {
             onClick={this.handleSeedClick}
             winner={(round >= currentRound && !complete) || A.votes[round - 1] < B.votes[round - 1]}
           />
-        </List.Item>
+        </ListItem>
       </List>
     );
   }
