@@ -67,7 +67,11 @@ class Bracket extends React.Component<{
         <PageContainer>
           {winner ? <Winner {...winner} /> : null}
 
-          <Header as="h1">{name}</Header>
+          <Header as="h1">
+            {name}
+            <Header sub>{`Round: ${bracket.round}`}</Header>
+          </Header>
+
           <BracketContainer>
             {rounds.map((e, i) => (
               <Round
