@@ -59,7 +59,6 @@ class Steps extends React.Component<{ history: Object }, { currentStep: Object, 
 
   next = () => {
     const { currentIndex } = this.state;
-    const { history } = this.props;
 
     // update current step
     steps[currentIndex].active = false;
