@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { connect } from 'react-redux';
 import { Image } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -92,4 +93,6 @@ const Seed = ({ e: { image, seed, title, votes, ...rest }, active, round, winner
   </SeedContainer>
 );
 
-export default Seed;
+export default connect(state => ({
+  votes: state.votes
+}))(Seed);

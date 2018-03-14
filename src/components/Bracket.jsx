@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import Round from 'components/Round';
 import Winner from 'components/Winner';
 import { getBracket, ungetBracket } from 'state/bracket';
-import { voteSeed } from 'state/vote';
+import { voteSeed } from 'state/votes';
 import { bracketify } from 'utils/helpers';
 
 const BracketContainer = styled.section`

@@ -36,10 +36,14 @@ class Pair extends React.Component<PairProps, { activeSeed: Object | null }> {
       this.setState(
         { activeSeed: { ...seed, votes: seed.votes.map((v, i) => (i + 1 === currentRound ? v + 1 : v)) } },
         () => {
-          onSeedClick({ ...seed, votes: seed.votes.map((v, i) => (i + 1 === currentRound ? v + 1 : v)) });
+          onSeedClick({ ...seed, vote: 1, votes: seed.votes.map((v, i) => (i + 1 === currentRound ? v + 1 : v)) });
 
           activeSeed &&
-            onSeedClick({ ...activeSeed, votes: activeSeed.votes.map((v, i) => (i + 1 === currentRound ? v - 1 : v)) });
+            onSeedClick({
+              ...activeSeed,
+              vote: -1,
+              votes: activeSeed.votes.map((v, i) => (i + 1 === currentRound ? v - 1 : v))
+            });
         }
       );
   };
