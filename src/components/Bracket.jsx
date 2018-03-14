@@ -69,7 +69,7 @@ class Bracket extends React.Component<{
 
           <Header as="h1">
             {name}
-            <Header sub>{`Round: ${bracket.round}`}</Header>
+            <Header sub>{`Round: ${round === numberOfRounds ? 'Final' : round}`}</Header>
           </Header>
 
           <BracketContainer>
