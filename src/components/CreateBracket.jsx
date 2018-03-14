@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { Container, Header, Icon, Step } from 'semantic-ui-react';
 
 import Configure from 'components/Configure';
@@ -38,9 +39,9 @@ const steps = [
   }
 ];
 
-class Steps extends React.Component<{}, { currentStep: string, currentIndex: number }> {
+class Steps extends React.Component<{ history: Object }, { currentStep: Object, currentIndex: number }> {
   state = {
-    currentStep: 'Configure',
+    currentStep: steps[0],
     currentIndex: 0
   };
 
@@ -59,6 +60,7 @@ class Steps extends React.Component<{}, { currentStep: string, currentIndex: num
 
   next = () => {
     const { currentIndex } = this.state;
+    const { history } = this.props;
 
     // update current step
     steps[currentIndex].active = false;
@@ -69,7 +71,13 @@ class Steps extends React.Component<{}, { currentStep: string, currentIndex: num
       steps[currentIndex + 1].active = true;
       steps[currentIndex + 1].disabled = false;
 
-      this.setState({ currentStep: steps[currentIndex + 1].name, currentIndex: currentIndex + 1 });
+      this.setState({ currentStep: steps[currentIndex + 1], currentIndex: currentIndex + 1 });
+    }
+
+    if (currentIndex + 1 === steps.length) {
+      this.setState({ currentStep: steps[currentIndex] });
+
+      setTimeout(() => history.push('/'), 1500);
     }
   };
 
@@ -87,7 +95,7 @@ class Steps extends React.Component<{}, { currentStep: string, currentIndex: num
       steps[currentIndex - 1].completed = false;
       steps[currentIndex - 1].disabled = false;
 
-      this.setState({ currentStep: steps[currentIndex - 1].name, currentIndex: currentIndex - 1 });
+      this.setState({ currentStep: steps[currentIndex - 1], currentIndex: currentIndex - 1 });
     }
   };
 
@@ -115,10 +123,10 @@ class Steps extends React.Component<{}, { currentStep: string, currentIndex: num
             );
           })}
         </Step.Group>
-        {this.renderStep(currentStep)}
+        {this.renderStep(currentStep.name)}
       </Container>
     );
   }
 }
 
-export default withAuthorization(Steps);
+export default withAuthorization(withRouter(Steps));

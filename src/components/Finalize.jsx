@@ -50,7 +50,7 @@ class Finalize extends React.Component {
 
           <ButtonsContainer>
             <Button animated>
-              <Button.Content visible>Next</Button.Content>
+              <Button.Content visible>View My Brackets</Button.Content>
               <Button.Content hidden>
                 <Icon name="right arrow" />
               </Button.Content>
