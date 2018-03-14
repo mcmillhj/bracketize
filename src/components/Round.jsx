@@ -17,6 +17,7 @@ const RoundDetails = styled.section`
   top: 0;
   text-transform: uppercase;
   font-family: 'Roboto Condensed', sans-serif;
+  font-weight: bold;
   text-align: center;
   align-self: center;
 `;
