@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { Container, Header, Icon, Step } from 'semantic-ui-react';
 
 import Configure from 'components/Configure';
@@ -76,8 +75,6 @@ class Steps extends React.Component<{ history: Object }, { currentStep: Object, 
 
     if (currentIndex + 1 === steps.length) {
       this.setState({ currentStep: steps[currentIndex] });
-
-      setTimeout(() => history.push('/'), 1500);
     }
   };
 
@@ -129,4 +126,4 @@ class Steps extends React.Component<{ history: Object }, { currentStep: Object, 
   }
 }
 
-export default withAuthorization(withRouter(Steps));
+export default withAuthorization(Steps);

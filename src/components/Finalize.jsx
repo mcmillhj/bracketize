@@ -1,5 +1,8 @@
+// @flow
+
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Button, Form, Header, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -23,9 +26,12 @@ const FormHeader = styled(Header)`
   }
 `;
 
-class Finalize extends React.Component {
+class Finalize extends React.Component<{ history: Object, bracketId: number, next: Function }> {
   onSubmit = () => {
+    const { history, bracketId } = this.props;
+
     this.props.next();
+    setTimeout(() => history.push(`/brackets/${bracketId}`), 1000);
   };
 
   render() {
@@ -50,7 +56,7 @@ class Finalize extends React.Component {
 
           <ButtonsContainer>
             <Button animated>
-              <Button.Content visible>View My Brackets</Button.Content>
+              <Button.Content visible>View Bracket</Button.Content>
               <Button.Content hidden>
                 <Icon name="right arrow" />
               </Button.Content>
@@ -62,4 +68,4 @@ class Finalize extends React.Component {
   }
 }
 
-export default connect(state => ({ bracketId: state.createBracket.id }))(Finalize);
+export default withRouter(connect(state => ({ bracketId: state.createBracket.id }))(Finalize));
