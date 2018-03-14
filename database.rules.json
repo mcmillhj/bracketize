@@ -3,13 +3,17 @@
     ".write": "auth !== null",
     "brackets": {
       ".read": true,
-      ".write": false
+      ".write": true
     },
     "users": {
       "$uid": {
+        ".read": true,
+        ".write": "auth !== null && auth.uid === $uid",
         "brackets": {
-          ".read": true,
-          ".write": "auth !== null && auth.uid === $uid"
+            "$bid": {
+              ".read": true,
+              ".write": "(auth !== null && auth.uid === $uid) || data.child('user_id').val() === $uid"
+          }
         }
       }
     }

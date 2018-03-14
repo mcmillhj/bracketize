@@ -28,12 +28,12 @@ const steps = [
     icon: <Icon name="leaf" />
   },
   {
-    name: 'Finalize',
+    name: 'Share',
     active: false,
     completed: false,
     disabled: true,
-    title: 'Finalize',
-    description: 'Complete Your Bracket',
+    title: 'Share',
+    description: 'Share Your Bracket',
     icon: <Icon name="share" />
   }
 ];
@@ -50,7 +50,7 @@ class Steps extends React.Component<{}, { currentStep: string, currentIndex: num
         return <Configure next={this.next} back={this.back} />;
       case 'Seeds':
         return <Seeds next={this.next} back={this.back} />;
-      case 'Finalize':
+      case 'Share':
         return <Finalize next={this.next} back={this.back} />;
       default:
         return null;
