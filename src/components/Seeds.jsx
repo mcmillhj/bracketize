@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { getFormValues } from 'redux-form';
 import { connect } from 'react-redux';
@@ -45,12 +47,25 @@ const SearchInput = styled(Search)`
   }
 `;
 
-class Seeds extends React.Component {
+type SeedProps = {
+  seeds: Array<Object>,
+  authUser: Object,
+  bracketSize: number,
+  bracketName: string,
+  addSeed: Function,
+  removeSeed: Function,
+  createBracket: Function,
+  next: Function,
+  back: Function
+};
+class Seeds extends React.Component<SeedProps, { results: Array<Object>, isLoading: boolean, value: string }> {
   state = {
     results: [],
     isLoading: false,
     value: ''
   };
+
+  client: Object;
 
   constructor(props) {
     super(props);
