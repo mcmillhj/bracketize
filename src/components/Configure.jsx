@@ -1,4 +1,7 @@
+// @flow
+
 import React from 'react';
+import type { Node } from 'react';
 import { Field, Form, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Button, Form as SemanticForm, Header, Icon } from 'semantic-ui-react';
@@ -32,7 +35,15 @@ const SemanticFormField = ({
   meta: { touched, error },
   as: As = SemanticForm.Input,
   ...props
-}) => {
+}: {
+  input: Object,
+  type: string,
+  label: string,
+  placeholder: string,
+  meta: { touched: boolean, error: string },
+  as: SemanticForm.Input
+}): Node => {
+  console.log(input);
   return (
     <SemanticForm.Field>
       <As
@@ -57,7 +68,13 @@ const SemanticFormField = ({
 
 const required = value => (value ? undefined : 'This is a required field');
 
-class Configure extends React.Component {
+class Configure extends React.Component<{
+  next: Function,
+  back: Function,
+  submitting: boolean,
+  invalid: boolean,
+  handleSubmit: Function
+}> {
   onSubmit = () => {
     this.props.next();
   };
@@ -125,4 +142,4 @@ class Configure extends React.Component {
   }
 }
 
-export default connect(state => ({}))(reduxForm({ form: 'configure', destroyOnUnmount: false })(Configure));
+export default connect(() => ({}))(reduxForm({ form: 'configure', destroyOnUnmount: false })(Configure));
