@@ -71,7 +71,7 @@ class Bracket extends React.Component<{
             {name}
             <Header sub>
               {`Round: ${round === numberOfRounds ? 'Final' : round}`}&nbsp;
-              {`Voting: ${allowVotes ? 'Active' : 'Inactive'}`}
+              {`Voting: ${allowVotes && !complete ? 'Active' : 'Inactive'}`}
             </Header>
             <Header sub />
           </Header>
