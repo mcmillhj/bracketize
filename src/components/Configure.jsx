@@ -43,7 +43,6 @@ const SemanticFormField = ({
   meta: { touched: boolean, error: string },
   as: SemanticForm.Input
 }): Node => {
-  console.log(input);
   return (
     <SemanticForm.Field>
       <As
