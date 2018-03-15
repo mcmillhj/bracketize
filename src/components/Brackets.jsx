@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, Container, Dropdown, Grid, Header, Icon, Image, Modal, Table } from 'semantic-ui-react';
 import styled from 'styled-components';
 
-import { changeComplete, changeRound, deleteBracket } from 'state/bracket';
+import { allowVotes, changeComplete, changeRound, deleteBracket } from 'state/bracket';
 import { getBrackets, ungetBrackets } from 'state/brackets';
 import withAuthorization from 'hoc/withAuthorization';
 
@@ -112,6 +112,7 @@ class DeleteBracketModal extends React.Component<
 class Brackets extends React.Component<{
   authUser: Object | null,
   brackets: Array<Object>,
+  allowVotes: Function,
   changeComplete: Function,
   changeRound: Function,
   deleteBracket: Function,
@@ -191,6 +192,20 @@ class Brackets extends React.Component<{
                               />
                             </Table.Cell>
                           </Table.Row>
+                          {!b.complete && (
+                            <Table.Row>
+                              <Table.Cell>Allow voting:</Table.Cell>
+                              <Table.Cell style={{ overflow: 'visible' }}>
+                                <Dropdown
+                                  disabled={b.complete}
+                                  defaultValue={b.allowVotes ? 'true' : 'false'}
+                                  placeholder="Allow Votes"
+                                  onChange={(e, { value }) => this.props.allowVotes(b.id, b.user_id, value === 'true')}
+                                  options={[{ text: 'true', value: 'true' }, { text: 'false', value: 'false' }]}
+                                />
+                              </Table.Cell>
+                            </Table.Row>
+                          )}
                         </Table.Body>
                       </Table>
                     </Card.Description>
@@ -222,6 +237,6 @@ export default withAuthorization(
       authUser: state.auth.authUser,
       brackets: state.brackets
     }),
-    { changeComplete, changeRound, deleteBracket, getBrackets, ungetBrackets }
+    { allowVotes, changeComplete, changeRound, deleteBracket, getBrackets, ungetBrackets }
   )(Brackets)
 );

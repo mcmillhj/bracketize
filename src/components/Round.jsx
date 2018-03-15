@@ -32,13 +32,23 @@ type RoundProps = {
   elements: Array<Array<Object>>
 };
 
-const Round = ({ elements, isFinalRound, currentRound, complete, round, numberOfRounds, onSeedClick }: RoundProps) => (
+const Round = ({
+  elements,
+  allowVotes,
+  isFinalRound,
+  currentRound,
+  complete,
+  round,
+  numberOfRounds,
+  onSeedClick
+}: RoundProps) => (
   <RoundContainer className="round" numberOfRounds={numberOfRounds}>
     <RoundDetails>{isFinalRound ? 'Final' : `Round ${round}`}</RoundDetails>
     {elements.map((e, i) => (
       <Pair
         key={`pair-${i}`}
         elements={e}
+        allowVotes={allowVotes}
         complete={complete}
         currentRound={currentRound}
         round={round}

@@ -142,6 +142,7 @@ class Seeds extends React.Component<SeedProps, { results: Array<Object>, isLoadi
       name: bracketName,
       size: bracketSize,
       complete: false,
+      allowVotes: false,
       round: 1
     });
 

@@ -22,6 +22,8 @@ export const changeComplete = (id: number, user_id: number) => () =>
   db.doUpdateBracket(id, user_id, { complete: true });
 export const changeRound = (id: number, user_id: number, round: number) => () =>
   db.doUpdateBracket(id, user_id, { round });
+export const allowVotes = (id: number, user_id: number, allowVotes: boolean) => () =>
+  db.doUpdateBracket(id, user_id, { allowVotes });
 
 export const deleteBracket = (authUser: Object, bracketId: number) => (dispatch: Function) => {
   return db

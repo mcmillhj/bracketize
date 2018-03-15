@@ -53,7 +53,7 @@ class Bracket extends React.Component<{
     const { bracket: { isLoading, bracket }, bracketId } = this.props;
 
     if (bracket && !isLoading) {
-      const { complete, name, round, seeds } = bracket;
+      const { complete, name, round, seeds, allowVotes } = bracket;
       const numberOfRounds = Math.floor(Math.log2(seeds.length));
       const rounds = bracketify(bracket);
 
@@ -69,7 +69,11 @@ class Bracket extends React.Component<{
 
           <Header as="h1">
             {name}
-            <Header sub>{`Round: ${round === numberOfRounds ? 'Final' : round}`}</Header>
+            <Header sub>
+              {`Round: ${round === numberOfRounds ? 'Final' : round}`}&nbsp;
+              {`Voting: ${allowVotes ? 'Active' : 'Inactive'}`}
+            </Header>
+            <Header sub />
           </Header>
 
           <BracketContainer>
@@ -83,6 +87,7 @@ class Bracket extends React.Component<{
                 currentRound={round}
                 numberOfRounds={numberOfRounds}
                 isFinalRound={i + 1 === numberOfRounds}
+                allowVotes={allowVotes}
               />
             ))}
           </BracketContainer>

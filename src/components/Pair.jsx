@@ -15,6 +15,7 @@ const ListItem = styled(List.Item)`
 
 type PairProps = {
   onSeedClick: Function,
+  allowVotes: boolean,
   complete: boolean,
   currentRound: number,
   round: number,
@@ -27,10 +28,11 @@ class Pair extends React.Component<PairProps, { activeSeed: Object | null }> {
   };
 
   handleSeedClick = (e: Event, seed: Object) => {
-    const { onSeedClick, complete, currentRound, round } = this.props;
+    const { onSeedClick, allowVotes, complete, currentRound, round } = this.props;
     const { activeSeed } = this.state;
 
     round === currentRound &&
+      allowVotes &&
       !complete &&
       !_.isEqual(activeSeed, seed) &&
       this.setState(
