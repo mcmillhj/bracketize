@@ -15,7 +15,7 @@ export const bracketify = bracket => {
   const bracketSize = elements.length * 2 - 2;
   const seedsByRound = [elements];
   for (let i = 1; i < round; i += 1) {
-    const newSeeds = pairify(seedsByRound[i - 1]).map(([a, b]) => (a.votes >= b.votes ? a : b));
+    const newSeeds = pairify(seedsByRound[i - 1]).map(([a, b]) => (a.votes[i - 1] >= b.votes[i - 1] ? a : b));
     seedsByRound.push(newSeeds);
   }
 

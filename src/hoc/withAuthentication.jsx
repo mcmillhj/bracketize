@@ -21,8 +21,8 @@ const withAuth = (Component: any) => {
     }
   }
 
-  return connect(null, dispatch => ({
-    onSetAuthUser: authUser => dispatch(setAuthUser(authUser))
+  return connect(null, (dispatch: Function) => ({
+    onSetAuthUser: (authUser: Object): void => dispatch(setAuthUser(authUser))
   }))(WithAuthentication);
 };
 
